@@ -1,0 +1,14 @@
+{
+  "role": "post-freeze_secondary_check_not_used_for_selection",
+  "primary_frozen_at": "2026-08-04T11:06:20.935087+00:00",
+  "selected_candidate_id": "l64_s08",
+  "initializations": 730,
+  "mean_relative_rmse_gain": 0.033833925186117476,
+  "median_relative_rmse_gain": 0.01804907627524943,
+  "minimum_relative_rmse_gain": -0.0009163381516392732,
+  "negative_rmse_cells": 2,
+  "negative_rmse_cell_fraction": 0.00816326530612245,
+  "mean_acc_delta": 0.0015423660562355682,
+  "minimum_acc_delta": -0.004291033596904192,
+  "negative_acc_cells": 21
+}

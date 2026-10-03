@@ -1,0 +1,19 @@
+# SphereTTC runtime + unit tests (CPU is enough for `pytest`; full runs need a CUDA GPU).
+# Pins follow the validated environment artifacts/graphcast_spherettc_20260804/ENVIRONMENT_20260804.txt
+# (Python 3.11).  Other environments: env/requirements-verify.txt (numpy only, for verify_migration.py),
+# env/requirements-gpu-graphcast.txt (JAX GraphCast inference), env/requirements-external-baselines.txt.
+# The original, unpinned dependency list is kept in archive/old_env/requirements_original.txt.
+numpy==1.26.4
+pandas
+xarray==2024.10.0
+zarr==2.18.7
+numcodecs==0.12.1
+dask==2024.8.1
+scipy
+PyYAML
+torch==2.7.1
+# Required by src/ttc/sphere.py but missing from the original list; version not recorded.
+# Unit tests pass with torch-harmonics 0.8.0.
+torch-harmonics
+psutil
+pytest

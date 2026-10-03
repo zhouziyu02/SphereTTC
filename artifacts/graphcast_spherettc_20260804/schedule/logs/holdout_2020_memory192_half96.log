@@ -1,0 +1,33 @@
+started_at=2026-08-04T12:41:21.824242+00:00
+physical_gpu=1
+command=/usr/bin/python /mnt/bn/czl-no-conda/mlx/users/ziyuzhou/SOON/scripts/run_ttc.py --config /mnt/bn/czl-no-conda/mlx/users/ziyuzhou/SOON/configs/unified_11model_ttc.yaml --model graphcast --cache /mnt/bn/czl-no-conda/mlx/users/ziyuzhou/SOON_graphcast_schedule_20260804/cache/graphcast_2020_current_a100.zarr --truth-root /mnt/bn/czl-no-conda/mlx/users/ziyuzhou/SOON_graphcast_schedule_20260804/data/S2S --truth-workers 4 --acc-climatology /mnt/bn/czl-no-conda/mlx/users/ziyuzhou/SOON/artifacts/ttc_publication_corrected_20260726/climatology/DAILY_DOY_1979_2016_COMMON49.npz --no-cache-output --metrics-output /mnt/bn/czl-no-conda/mlx/users/ziyuzhou/SOON_graphcast_schedule_20260804/metrics/holdout_2020/memory192_half96.npz --profile-output /mnt/bn/czl-no-conda/mlx/users/ziyuzhou/SOON_graphcast_schedule_20260804/profiles/holdout_2020_memory192_half96.json --method sphere_ttc --params-json /mnt/bn/czl-no-conda/mlx/users/ziyuzhou/SOON_graphcast_schedule_20260804/configs/generated/memory192_half96.json --warmup-cache /mnt/bn/czl-no-conda/mlx/users/ziyuzhou/SOON_graphcast_schedule_20260804/cache/graphcast_2019_current_a100.zarr --trim-warmup-cache --warmup-truth-root /mnt/bn/czl-no-conda/mlx/users/ziyuzhou/SOON/data/S2S
+/mnt/bn/czl-no-conda/mlx/users/ziyuzhou/SOON/src/ttc/metrics.py:9: UserWarning: The given NumPy array is not writable, and PyTorch does not support non-writable tensors. This means writing to this tensor will result in undefined behavior. You may want to copy the array to protect its data or make it writable before converting it to a tensor. This type of warning will be suppressed for the rest of this program. (Triggered internally at /opt/tiger/compile_path/src/code.byted.org/pytorch/pytorch/torch/csrc/utils/tensor_numpy.cpp:203.)
+  lat_t = torch.as_tensor(lat, dtype=torch.float32, device=device)
+graphcast loaded causal warmup cache /mnt/bn/czl-no-conda/mlx/users/ziyuzhou/SOON_graphcast_schedule_20260804/cache/graphcast_2019_current_a100.zarr with 206/206 retained initializations
+graphcast sphere_ttc wrote init 16/366
+graphcast sphere_ttc wrote init 32/366
+graphcast sphere_ttc wrote init 48/366
+graphcast sphere_ttc wrote init 64/366
+graphcast sphere_ttc wrote init 80/366
+graphcast sphere_ttc wrote init 96/366
+graphcast sphere_ttc wrote init 112/366
+graphcast sphere_ttc wrote init 128/366
+graphcast sphere_ttc wrote init 144/366
+graphcast sphere_ttc wrote init 160/366
+graphcast sphere_ttc wrote init 176/366
+graphcast sphere_ttc wrote init 192/366
+graphcast sphere_ttc wrote init 208/366
+graphcast sphere_ttc wrote init 224/366
+graphcast sphere_ttc wrote init 240/366
+graphcast sphere_ttc wrote init 256/366
+graphcast sphere_ttc wrote init 272/366
+graphcast sphere_ttc wrote init 288/366
+graphcast sphere_ttc wrote init 304/366
+graphcast sphere_ttc wrote init 320/366
+graphcast sphere_ttc wrote init 336/366
+graphcast sphere_ttc wrote init 352/366
+graphcast sphere_ttc wrote init 366/366
+WROTE /mnt/bn/czl-no-conda/mlx/users/ziyuzhou/SOON_graphcast_schedule_20260804/metrics/holdout_2020/memory192_half96.npz
+PROFILE /mnt/bn/czl-no-conda/mlx/users/ziyuzhou/SOON_graphcast_schedule_20260804/profiles/holdout_2020_memory192_half96.json wall_seconds=144.992 cuda_peak_memory_gb=2.243
+finished_at=2026-08-04T12:43:52.216530+00:00
+returncode=0

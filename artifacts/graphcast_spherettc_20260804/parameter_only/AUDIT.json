@@ -1,0 +1,39 @@
+{
+  "local_gpu_execution": {
+    "passed": true,
+    "devices": [
+      "NVIDIA A100-SXM4-80GB",
+      "NVIDIA A100-SXM4-80GB"
+    ],
+    "cpu_metric_replay_enabled": false,
+    "test_2018_wall_seconds": 114.13321961462498,
+    "test_2019_wall_seconds": 116.35049622505903,
+    "cuda_peak_memory_gb_per_process": 0.375861248
+  },
+  "raw_metric_reproduction": {
+    "passed": true,
+    "coordinates_equal": true,
+    "mse_max_abs_difference": 0.0,
+    "mae_max_abs_difference": 0.0,
+    "bias_max_abs_difference": 0.0,
+    "acc_numerator_max_abs_difference": 0.0,
+    "acc_prediction_energy_max_abs_difference": 0.0,
+    "acc_target_energy_max_abs_difference": 0.0
+  },
+  "source_repository_integrity": {
+    "passed": true,
+    "source_and_config_hashes_unchanged": true,
+    "graphcast_cache_metadata_unchanged": true,
+    "frozen_main_result_verifier": "MAIN_RESULTS_REPRODUCIBLE",
+    "frozen_markdown_byte_identical": true
+  },
+  "test_decision": {
+    "primary_expected_effect_pass": false,
+    "strict_acc_pass": false,
+    "mean_relative_rmse_gain": 0.015481688882891783,
+    "negative_rmse_cells": 1,
+    "negative_rmse_cell_fraction": 0.004081632653061225,
+    "mean_acc_delta": -0.00001117280618462257,
+    "negative_acc_cells": 55
+  }
+}

@@ -1,0 +1,7 @@
+lead,spheredyn_raw_nrmse,spheredyn_spherettc_nrmse,gain_percent,spheredyn_raw_acc,spheredyn_spherettc_acc,best_local_baseline,best_local_raw_nrmse,best_raw_backbone,best_raw_nrmse,graphcast_raw_nrmse,spheredyn_raw_rank_among_12_raw,spheredyn_spherettc_nrmse_rank_among_24,spheredyn_spherettc_acc_rank_among_24
+24h,0.186959,0.127366,31.8750,0.932018,0.968308,fno,0.313236,pangu,0.112747,0.113347,5,7,7
+72h,0.359487,0.227067,36.8358,0.724239,0.905088,fno,0.426328,GraphCast-small 1°,0.178825,0.178825,6,8,8
+120h,0.422604,0.292189,30.8600,0.582479,0.837509,fno,0.472372,GraphCast-small 1°,0.270588,0.270588,5,7,7
+168h,0.455256,0.353201,22.4171,0.478086,0.745769,cirt,0.490845,GraphCast-small 1°,0.378550,0.378550,5,1,1
+240h,0.480066,0.423069,11.8727,0.369364,0.583336,cirt,0.500097,cirt,0.500097,0.517298,1,1,1
+all,0.380874,0.284578,25.2829,0.617237,0.808002,fno,0.442742,GraphCast-small 1°,0.291722,0.291722,5,2,1

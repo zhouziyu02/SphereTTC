@@ -1,0 +1,329 @@
+{
+  "status": "FROZEN_BEFORE_2020",
+  "created_at": "2026-08-04T11:05:28.347464+00:00",
+  "prospective_2020_metrics_touched": false,
+  "search_slice": [
+    120,
+    274
+  ],
+  "internal_holdout_slice": [
+    274,
+    365
+  ],
+  "schedule": {
+    "24": {
+      "geopotential": "l64_s10",
+      "humidity": "l64_s10",
+      "meridional_wind": "l64_s10",
+      "mslp": "l64_s10",
+      "temperature": "l64_s10",
+      "zonal_wind": "l64_s10"
+    },
+    "72": {
+      "geopotential": "memory192_half96",
+      "humidity": "l40_s10",
+      "meridional_wind": "memory192_half96",
+      "mslp": "memory192_half96",
+      "temperature": "l64_s10",
+      "zonal_wind": "memory128_half64"
+    },
+    "120": {
+      "geopotential": "memory128_half64",
+      "humidity": "l64_s10",
+      "meridional_wind": "l64_s10",
+      "mslp": "memory192_half96",
+      "temperature": "l64_s10",
+      "zonal_wind": "l64_s10"
+    },
+    "168": {
+      "geopotential": "memory192_half96",
+      "humidity": "l64_s10",
+      "meridional_wind": "l64_s08",
+      "mslp": "memory192_half96",
+      "temperature": "l64_s10",
+      "zonal_wind": "l64_s10"
+    },
+    "240": {
+      "geopotential": "l64_s08",
+      "humidity": "l64_s05",
+      "meridional_wind": "delta10",
+      "mslp": "delta10",
+      "temperature": "l64_s065",
+      "zonal_wind": "l64_s065"
+    }
+  },
+  "selected_candidate_ids": [
+    "delta10",
+    "l40_s10",
+    "l64_s05",
+    "l64_s065",
+    "l64_s08",
+    "l64_s10",
+    "memory128_half64",
+    "memory192_half96"
+  ],
+  "selected_rows": [
+    {
+      "lead_time_hours": 24,
+      "family": "geopotential",
+      "candidate_id": "l64_s10",
+      "mean_relative_rmse_gain": 0.10936717328614316,
+      "negative_rmse_cell_fraction": 0.0,
+      "mean_acc_delta": 0.0011982475274609926
+    },
+    {
+      "lead_time_hours": 24,
+      "family": "humidity",
+      "candidate_id": "l64_s10",
+      "mean_relative_rmse_gain": 0.00421000354233752,
+      "negative_rmse_cell_fraction": 0.0,
+      "mean_acc_delta": 0.0004653504601354916
+    },
+    {
+      "lead_time_hours": 24,
+      "family": "meridional_wind",
+      "candidate_id": "l64_s10",
+      "mean_relative_rmse_gain": 0.06592557058404461,
+      "negative_rmse_cell_fraction": 0.0,
+      "mean_acc_delta": 0.0029556253320686455
+    },
+    {
+      "lead_time_hours": 24,
+      "family": "mslp",
+      "candidate_id": "l64_s10",
+      "mean_relative_rmse_gain": 0.1157427633563819,
+      "negative_rmse_cell_fraction": 0.0,
+      "mean_acc_delta": 0.0018216999394173872
+    },
+    {
+      "lead_time_hours": 24,
+      "family": "temperature",
+      "candidate_id": "l64_s10",
+      "mean_relative_rmse_gain": 0.046991624759473584,
+      "negative_rmse_cell_fraction": 0.0,
+      "mean_acc_delta": 0.0022114774707634234
+    },
+    {
+      "lead_time_hours": 24,
+      "family": "zonal_wind",
+      "candidate_id": "l64_s10",
+      "mean_relative_rmse_gain": 0.024101962672792587,
+      "negative_rmse_cell_fraction": 0.0,
+      "mean_acc_delta": 0.0009876171772841614
+    },
+    {
+      "lead_time_hours": 72,
+      "family": "geopotential",
+      "candidate_id": "memory192_half96",
+      "mean_relative_rmse_gain": 0.01774755072837088,
+      "negative_rmse_cell_fraction": 0.0,
+      "mean_acc_delta": 0.0007567919014833299
+    },
+    {
+      "lead_time_hours": 72,
+      "family": "humidity",
+      "candidate_id": "l40_s10",
+      "mean_relative_rmse_gain": 0.0017194644915949169,
+      "negative_rmse_cell_fraction": 0.0,
+      "mean_acc_delta": 0.0003084389985631554
+    },
+    {
+      "lead_time_hours": 72,
+      "family": "meridional_wind",
+      "candidate_id": "memory192_half96",
+      "mean_relative_rmse_gain": 0.014591620828904795,
+      "negative_rmse_cell_fraction": 0.0,
+      "mean_acc_delta": 0.0016219576587180983
+    },
+    {
+      "lead_time_hours": 72,
+      "family": "mslp",
+      "candidate_id": "memory192_half96",
+      "mean_relative_rmse_gain": 0.019900756910566586,
+      "negative_rmse_cell_fraction": 0.0,
+      "mean_acc_delta": 0.0010724064728472316
+    },
+    {
+      "lead_time_hours": 72,
+      "family": "temperature",
+      "candidate_id": "l64_s10",
+      "mean_relative_rmse_gain": 0.013155533767559114,
+      "negative_rmse_cell_fraction": 0.0,
+      "mean_acc_delta": 0.002079434964452376
+    },
+    {
+      "lead_time_hours": 72,
+      "family": "zonal_wind",
+      "candidate_id": "memory128_half64",
+      "mean_relative_rmse_gain": 0.0049600033619545455,
+      "negative_rmse_cell_fraction": 0.0,
+      "mean_acc_delta": 0.0005390209101626131
+    },
+    {
+      "lead_time_hours": 120,
+      "family": "geopotential",
+      "candidate_id": "memory128_half64",
+      "mean_relative_rmse_gain": 0.007143841303784636,
+      "negative_rmse_cell_fraction": 0.0,
+      "mean_acc_delta": 0.0006558745733835389
+    },
+    {
+      "lead_time_hours": 120,
+      "family": "humidity",
+      "candidate_id": "l64_s10",
+      "mean_relative_rmse_gain": 0.011580941873412865,
+      "negative_rmse_cell_fraction": 0.0,
+      "mean_acc_delta": 0.001398904900878955
+    },
+    {
+      "lead_time_hours": 120,
+      "family": "meridional_wind",
+      "candidate_id": "l64_s10",
+      "mean_relative_rmse_gain": 0.013698459528191386,
+      "negative_rmse_cell_fraction": 0.1,
+      "mean_acc_delta": 0.0014400680680911825
+    },
+    {
+      "lead_time_hours": 120,
+      "family": "mslp",
+      "candidate_id": "memory192_half96",
+      "mean_relative_rmse_gain": 0.010043422456780027,
+      "negative_rmse_cell_fraction": 0.0,
+      "mean_acc_delta": 0.0009358809232008491
+    },
+    {
+      "lead_time_hours": 120,
+      "family": "temperature",
+      "candidate_id": "l64_s10",
+      "mean_relative_rmse_gain": 0.016367506051421475,
+      "negative_rmse_cell_fraction": 0.1,
+      "mean_acc_delta": 0.0027310707662037805
+    },
+    {
+      "lead_time_hours": 120,
+      "family": "zonal_wind",
+      "candidate_id": "l64_s10",
+      "mean_relative_rmse_gain": 0.014214819110681232,
+      "negative_rmse_cell_fraction": 0.0,
+      "mean_acc_delta": 0.001669281690343738
+    },
+    {
+      "lead_time_hours": 168,
+      "family": "geopotential",
+      "candidate_id": "memory192_half96",
+      "mean_relative_rmse_gain": 0.027698615197159757,
+      "negative_rmse_cell_fraction": 0.0,
+      "mean_acc_delta": 0.0026640725884207552
+    },
+    {
+      "lead_time_hours": 168,
+      "family": "humidity",
+      "candidate_id": "l64_s10",
+      "mean_relative_rmse_gain": 0.03532688914731016,
+      "negative_rmse_cell_fraction": 0.0,
+      "mean_acc_delta": 0.00028107162832520977
+    },
+    {
+      "lead_time_hours": 168,
+      "family": "meridional_wind",
+      "candidate_id": "l64_s08",
+      "mean_relative_rmse_gain": 0.04060777186112554,
+      "negative_rmse_cell_fraction": 0.0,
+      "mean_acc_delta": 0.0009028294421746907
+    },
+    {
+      "lead_time_hours": 168,
+      "family": "mslp",
+      "candidate_id": "memory192_half96",
+      "mean_relative_rmse_gain": 0.03731402290902219,
+      "negative_rmse_cell_fraction": 0.0,
+      "mean_acc_delta": 0.0033199034113854387
+    },
+    {
+      "lead_time_hours": 168,
+      "family": "temperature",
+      "candidate_id": "l64_s10",
+      "mean_relative_rmse_gain": 0.04332145917147293,
+      "negative_rmse_cell_fraction": 0.0,
+      "mean_acc_delta": 0.003350087444614358
+    },
+    {
+      "lead_time_hours": 168,
+      "family": "zonal_wind",
+      "candidate_id": "l64_s10",
+      "mean_relative_rmse_gain": 0.04280564773313674,
+      "negative_rmse_cell_fraction": 0.0,
+      "mean_acc_delta": 0.0006054544229288639
+    },
+    {
+      "lead_time_hours": 240,
+      "family": "geopotential",
+      "candidate_id": "l64_s08",
+      "mean_relative_rmse_gain": 0.08022827341983144,
+      "negative_rmse_cell_fraction": 0.0,
+      "mean_acc_delta": 1.4937867613825281e-05
+    },
+    {
+      "lead_time_hours": 240,
+      "family": "humidity",
+      "candidate_id": "l64_s05",
+      "mean_relative_rmse_gain": 0.05009086802247567,
+      "negative_rmse_cell_fraction": 0.0,
+      "mean_acc_delta": 0.00025019656940287555
+    },
+    {
+      "lead_time_hours": 240,
+      "family": "meridional_wind",
+      "candidate_id": "delta10",
+      "mean_relative_rmse_gain": 0.0875873369818709,
+      "negative_rmse_cell_fraction": 0.0,
+      "mean_acc_delta": 0.0010404156338870373
+    },
+    {
+      "lead_time_hours": 240,
+      "family": "mslp",
+      "candidate_id": "delta10",
+      "mean_relative_rmse_gain": 0.08582583802325494,
+      "negative_rmse_cell_fraction": 0.0,
+      "mean_acc_delta": 0.0042267979945085354
+    },
+    {
+      "lead_time_hours": 240,
+      "family": "temperature",
+      "candidate_id": "l64_s065",
+      "mean_relative_rmse_gain": 0.07456311611937885,
+      "negative_rmse_cell_fraction": 0.0,
+      "mean_acc_delta": 0.0023596604357334072
+    },
+    {
+      "lead_time_hours": 240,
+      "family": "zonal_wind",
+      "candidate_id": "l64_s065",
+      "mean_relative_rmse_gain": 0.07849751171587145,
+      "negative_rmse_cell_fraction": 0.0,
+      "mean_acc_delta": 0.002651158402195036
+    }
+  ],
+  "internal_holdout_summary": {
+    "initializations": 91,
+    "mean_relative_rmse_gain": 0.03303721838282455,
+    "median_relative_rmse_gain": 0.020568510871016743,
+    "minimum_relative_rmse_gain": 0.0,
+    "negative_rmse_cells": 0,
+    "negative_rmse_cell_fraction": 0.0,
+    "mean_acc_delta": 0.00155194171059171,
+    "minimum_acc_delta": -0.004132882141374028,
+    "negative_acc_cells": 15
+  },
+  "full_development_summary": {
+    "initializations": 245,
+    "mean_relative_rmse_gain": 0.03584809944241497,
+    "median_relative_rmse_gain": 0.02380172871558217,
+    "minimum_relative_rmse_gain": 0.0,
+    "negative_rmse_cells": 0,
+    "negative_rmse_cell_fraction": 0.0,
+    "mean_acc_delta": 0.001650007727927751,
+    "minimum_acc_delta": -0.0032103632754037492,
+    "negative_acc_cells": 22
+  }
+}

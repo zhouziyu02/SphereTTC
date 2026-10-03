@@ -1,0 +1,20 @@
+Validated runtime for the frozen GraphCast + SphereTTC experiments
+Python: 3.11
+GPU: 2 x NVIDIA A100-SXM4-80GB
+
+numpy==1.26.4
+pandas==3.0.3
+xarray==2024.10.0
+zarr==2.18.7
+numcodecs==0.12.1
+scipy==1.17.1
+torch==2.7.1
+jax==0.4.28
+jaxlib==0.4.28
+dm-haiku==0.0.12
+jraph==0.0.6.dev0
+chex==0.1.86
+tree-math==0.2.1
+dask==2024.8.1
+gcsfs==2026.7.0
+PyYAML==6.0.3

@@ -1,0 +1,19 @@
+{
+  "status": "FROZEN_BEFORE_EXECUTION",
+  "evidence_class": "2018_DEVELOPMENT_WARM_STARTED_PAIRED_CAPACITY_COMPUTE_MATCHED_SCREEN",
+  "hypothesis": "A native/half/quarter-resolution spherical residual path supplies the planetary-to-local receptive fields absent from the v8 observation decoder while preserving the recursive daily flow.",
+  "architecture": {
+    "retained": ["v6 recursive daily flow", "v8 direct observation-time decoder"],
+    "new_mechanism": "three-scale spherical residual decoder",
+    "scales": [1.0, 0.5, 0.25],
+    "width": 160,
+    "blocks_per_scale": 3,
+    "zero_initialized_head": true,
+    "parameter_count": 3966080
+  },
+  "control": "Identical parameters and operations with only the final multiscale residual suppressed.",
+  "warm_start": "Best paired v8 continuation candidate selected by frozen macro nRMSE screen.",
+  "training": {"fit_samples": 6000, "epochs": 8, "batch_size": 2, "learning_rate": 0.00005, "seed": 44},
+  "promotion": "Positive CI versus null and incumbent plus at least 8.5% short/mid reduction versus the selected v8 continuation; internal SOTA is separately required.",
+  "prospective_2023_touched": false
+}

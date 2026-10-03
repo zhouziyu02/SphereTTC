@@ -1,0 +1,165 @@
+experiment:
+  name: unified_11model_protocol
+  train_years: [1979, 2016]
+  validation_years: [2017]
+  test_years: [2018, 2019]
+  init_frequency_hours: 24
+  lead_time_hours: [24, 72, 120, 168, 240]
+  output_lat_points: 121
+  output_lon_points: 240
+  strict_real_data: true
+  allow_synthetic: false
+  require_cuda_for_full_experiment: true
+  variables:
+    - z10
+    - z50
+    - z100
+    - z200
+    - z300
+    - z500
+    - z700
+    - z850
+    - z925
+    - z1000
+    - q10
+    - q50
+    - q100
+    - q200
+    - q300
+    - q500
+    - q700
+    - q850
+    - q925
+    - q1000
+    - t10
+    - t50
+    - t100
+    - t200
+    - t300
+    - t500
+    - t700
+    - t850
+    - t925
+    - t1000
+    - u10hpa
+    - u50
+    - u100
+    - u200
+    - u300
+    - u500
+    - u700
+    - u850
+    - u925
+    - u1000
+    - v10hpa
+    - v50
+    - v100
+    - v200
+    - v300
+    - v500
+    - v700
+    - v850
+    - v925
+    - v1000
+    - u10
+    - v10
+    - t2m
+    - mslp
+  pressure_levels_hpa: [10, 50, 100, 200, 300, 500, 700, 850, 925, 1000]
+  pressure_variable_prefixes: [z, q, t, u, v]
+  surface_variables: [u10, v10, t2m, mslp]
+  pressure_10hpa_wind_names: [u10hpa, v10hpa]
+  data_layout: daily_zarr_shards
+  initialization_hour_utc: 0
+models:
+  - convlstm
+  - transformer
+  - fno
+  - vit
+  - cirt
+  - climode
+  - fourcastnetv2
+  - oneforecast
+  - fuxi
+  - pangu
+  - graphcast
+official_models:
+  - fourcastnetv2
+  - oneforecast
+  - fuxi
+  - pangu
+  - graphcast
+local_models:
+  - convlstm
+  - transformer
+  - fno
+  - vit
+  - cirt
+  - climode
+weatherbench2:
+  era5_truth_uri: gs://weatherbench2/datasets/era5/1959-2023_01_10-6h-240x121_equiangular_with_poles_conservative.zarr
+  official_cache_roots:
+    - artifacts/official_69var_2018_2019_20260717T181000Z/cache
+  local_supervised_dataset: null
+s2s:
+  root: data/S2S
+  source_uri: gs://weatherbench2/datasets/era5_daily/1959-2023_01_10-full_37-1h-0p25deg-chunk-1-s2s.zarr
+  pressure_dir: pressure_level_1.5
+  single_level_dir: single_level_1.5
+  pressure_filename: era5_pressure_full_1.5deg_{date:%Y%m%d}.zarr
+  single_level_filename: era5_single_full_1.5deg_{date:%Y%m%d}.zarr
+  coverage_start: 1979-01-01
+  coverage_end: 2020-12-31
+  manifest: artifacts/unified_11model/s2s_daily_54var_manifest.json
+training:
+  epochs: 30
+  batch_size_per_rank: 8
+  validation_samples: 365
+  early_stopping_patience: 8
+  min_epochs: 15
+  seed: 42
+  retrain_on_all_data: false
+  initialization: random
+  official_weights: forbidden_for_local_models
+  split_policy: 1979_2016_fit__2017_validation_and_ttc_tuning__2018_2019_frozen_test
+evaluation:
+  cache_shape: [null, 5, 54, 121, 240]
+  common_model_variable_count: 49
+  common_model_pressure_levels_hpa: [50, 100, 200, 300, 500, 700, 850, 925, 1000]
+  common_model_variable_policy: strict_official_output_intersection
+  local_models_include_10hpa: true
+  official_models_include_10hpa: false
+  full_daily_initializations_2018_2019: 730
+  canonical_truth: data/S2S daily shards
+  ignore_embedded_official_cache_target: true
+  official_forecast_output_statistic: daily_mean
+  official_daily_mean_sample_hours_utc: [0, 6, 12, 18]
+  acc_climatology: daily_month_day_mean_from_1979_2016_fit_split
+  metrics: [rmse, mae, acc, tcc, bias]
+  compare_unit: variablewise_normalized_macro
+  comparison_methods: [raw, sphere_ttc]
+  ttc_methods: [sphere_ttc]
+  hyperparameter_selection: model_specific_on_2017_only
+  frozen_test_policy: no_2018_2019_metric_or_target_access_before_parameter_freeze
+ttc:
+  memory_size: 64
+  adapt_steps: 1
+  lr: 0.001
+  alpha: 0.05
+  n_modes: 8
+  lambda_scale: 0.001
+  lambda_bias: 0.001
+  snr_lambda: 4.0
+  strength: 0.75
+  min_memory: 12
+  sample_tau: 24
+  device: cuda
+  require_cuda: true
+  proposed_method:
+    name: SphereTTC
+    transform: truncated_real_spherical_harmonics
+    feedback: lead_dependent_delayed_ground_truth
+    estimator: robust_recency_weighted_complex_affine
+    negative_transfer_control: chronological_cross_fitted_risk_gate
+    validation_year: 2017
+    test_years: [2018, 2019]

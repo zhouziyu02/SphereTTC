@@ -1,0 +1,2 @@
+# Deterministic aggregation and result verification only (no training/inference).
+numpy==1.26.4

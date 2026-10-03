@@ -1,0 +1,32 @@
+{
+  "algorithm": "sphere_ttc",
+  "development_year": 2017,
+  "search_initialization_slice": [120, 274],
+  "internal_holdout_slice": [274, 365],
+  "prospective_holdout_year": 2020,
+  "families": {
+    "geopotential": "variable starts with z",
+    "humidity": "variable starts with q",
+    "temperature": "pressure-level t plus t2m",
+    "zonal_wind": "pressure-level u plus u10",
+    "meridional_wind": "pressure-level v plus v10",
+    "mslp": "mean sea-level pressure"
+  },
+  "search_eligibility": {
+    "minimum_mean_relative_rmse_gain": 0.0,
+    "maximum_negative_rmse_cell_fraction": 0.1,
+    "minimum_mean_acc_delta": 0.0
+  },
+  "primary_global_selection": {
+    "windows": ["search", "internal_holdout"],
+    "minimum_mean_relative_rmse_gain_each_window": 0.02,
+    "maximum_negative_rmse_cell_fraction_each_window": 0.05,
+    "minimum_mean_acc_delta_each_window": 0.0,
+    "objective": "maximize the minimum mean relative RMSE gain across the two windows; break ties by the minimum ACC delta"
+  },
+  "prospective_success": {
+    "minimum_mean_relative_rmse_gain": 0.02,
+    "maximum_negative_rmse_cell_fraction": 0.05,
+    "minimum_mean_acc_delta": 0.0
+  }
+}

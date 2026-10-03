@@ -1,0 +1,85 @@
+experiment:
+  # OneForecast's released checkpoint produces all-NaN autoregressive
+  # rollouts under FP16 autocast on V100. Publication caches must use FP32.
+  official_inference_amp: false
+  # Publication recovery may append to an already-audited init-time prefix
+  # after quota eviction or node interruption.
+  official_inference_resume: true
+  name: official_daily_common49_2018_2019
+  test_years: [2018, 2019]
+  init_frequency_hours: 24
+  initialization_hour_utc: 0
+  # The canonical S2S target is a UTC daily mean. Official 6-hourly models
+  # therefore contribute forecast states at 00/06/12/18 UTC of each target
+  # day. Embedded truth is omitted from model caches and loaded canonically at
+  # evaluation time.
+  official_forecast_output_statistic: daily_mean
+  daily_mean_sample_hours_utc: [0, 6, 12, 18]
+  cache_embedded_target: false
+  lead_time_hours: [24, 72, 120, 168, 240]
+  output_lat_points: 121
+  output_lon_points: 240
+  strict_real_data: true
+  require_cuda_for_full_experiment: true
+  official_inference_batch_size: 8
+  variables:
+    - z50
+    - z100
+    - z200
+    - z300
+    - z500
+    - z700
+    - z850
+    - z925
+    - z1000
+    - q50
+    - q100
+    - q200
+    - q300
+    - q500
+    - q700
+    - q850
+    - q925
+    - q1000
+    - t50
+    - t100
+    - t200
+    - t300
+    - t500
+    - t700
+    - t850
+    - t925
+    - t1000
+    - u50
+    - u100
+    - u200
+    - u300
+    - u500
+    - u700
+    - u850
+    - u925
+    - u1000
+    - v50
+    - v100
+    - v200
+    - v300
+    - v500
+    - v700
+    - v850
+    - v925
+    - v1000
+    - u10
+    - v10
+    - t2m
+    - mslp
+  pressure_levels_hpa: [50, 100, 200, 300, 500, 700, 850, 925, 1000]
+  pressure_variable_prefixes: [z, q, t, u, v]
+  surface_variables: [u10, v10, t2m, mslp]
+models:
+  - fourcastnetv2
+  - oneforecast
+  - fuxi
+  - pangu
+  - graphcast
+weatherbench2:
+  era5_truth_uri: gs://weatherbench2/datasets/era5/1959-2023_01_10-6h-240x121_equiangular_with_poles_conservative.zarr

@@ -1,0 +1,50 @@
+# TTC-only execution configuration for the frozen 11-model protocol.
+# The canonical variables, years, leads and grid live in
+# configs/unified_11model_protocol.yaml; run_ttc.py reads the ttc block here.
+protocol: configs/unified_11model_protocol.yaml
+experiment:
+  name: unified_11model_ttc
+  test_years: [2018, 2019]
+  init_frequency_hours: 24
+  lead_time_hours: [24, 72, 120, 168, 240]
+  output_lat_points: 121
+  output_lon_points: 240
+models:
+  - convlstm
+  - transformer
+  - fno
+  - vit
+  - cirt
+  - climode
+  - fourcastnetv2
+  - oneforecast
+  - fuxi
+  - pangu
+  - graphcast
+ttc:
+  memory_size: 64
+  adapt_steps: 1
+  lr: 0.001
+  alpha: 0.05
+  n_modes: 8
+  lambda_scale: 0.001
+  lambda_bias: 0.001
+  snr_lambda: 4.0
+  strength: 0.75
+  min_memory: 12
+  sample_tau: 24
+  device: cuda
+  require_cuda: true
+  method: sphere_ttc
+  validation_year: 2017
+  model_specific_hyperparameters: true
+  lmax: 16
+  mmax: 16
+  half_life: 32
+  ridge: 0.05
+  holdout_fraction: 0.25
+  min_holdout: 8
+  confidence_z: 0.5
+  robust_quantile_scale: 3.0
+  max_scale_delta: 0.5
+  taper_power: 1.0

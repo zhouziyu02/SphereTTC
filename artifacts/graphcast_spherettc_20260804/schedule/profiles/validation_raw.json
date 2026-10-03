@@ -1,0 +1,43 @@
+{
+  "stage": "ttc",
+  "model_name": "graphcast",
+  "method": "raw",
+  "input_cache": "/mnt/bn/czl-no-conda/mlx/users/ziyuzhou/SOON/artifacts/ttc_publication_corrected_20260726/official_daily_mean/cache/graphcast/forecast_cache_2017_121x240.zarr",
+  "output_cache": null,
+  "metrics_output": "/mnt/bn/czl-no-conda/mlx/users/ziyuzhou/SOON_graphcast_schedule_20260804/metrics/validation/raw.npz",
+  "output_includes_target": true,
+  "variables": null,
+  "truth_root": "/mnt/bn/czl-no-conda/mlx/users/ziyuzhou/SOON/data/S2S",
+  "init_times_from": null,
+  "init_start": null,
+  "init_end_inclusive": null,
+  "warmup_cache": null,
+  "memory_size": 64,
+  "n_modes": null,
+  "snr_lambda": null,
+  "strength": null,
+  "min_memory": null,
+  "sample_tau": null,
+  "sphere_ttc": null,
+  "st_ttc": null,
+  "pred_shape": [
+    365,
+    5,
+    49,
+    121,
+    240
+  ],
+  "wall_seconds": 100.83909532427788,
+  "cuda_peak_memory_gb": 0.092872704,
+  "device_info": {
+    "torch_importable": true,
+    "cuda_visible_devices": "0",
+    "cuda_available": true,
+    "device_count": 1,
+    "device_names": [
+      "NVIDIA A100-SXM4-80GB"
+    ],
+    "device": "cuda:0"
+  },
+  "created_at": "2026-08-04T09:25:42.347348+00:00"
+}

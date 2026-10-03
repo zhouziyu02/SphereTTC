@@ -1,0 +1,42 @@
+{
+  "method": "circular moving-block bootstrap over initialization dates",
+  "replicates": 2000,
+  "block_days": 14,
+  "seed": 20260804,
+  "primary_global": {
+    "mean_relative_rmse_gain_percentiles_2p5_50_97p5": [
+      0.03424072241585979,
+      0.03568832900449998,
+      0.03728894761733638
+    ],
+    "mean_acc_delta_percentiles_2p5_50_97p5": [
+      0.0020067248230515038,
+      0.002572919477138365,
+      0.003081433529805545
+    ],
+    "negative_rmse_cell_fraction_percentiles_2p5_50_97p5": [
+      0.0,
+      0.0,
+      0.004081632653061225
+    ],
+    "bootstrap_success_probability": 1.0
+  },
+  "secondary_family_lead_schedule": {
+    "mean_relative_rmse_gain_percentiles_2p5_50_97p5": [
+      0.03522661679687066,
+      0.036713697423748054,
+      0.03833066539499791
+    ],
+    "mean_acc_delta_percentiles_2p5_50_97p5": [
+      0.0024875124874632047,
+      0.0029752243241701276,
+      0.0034084861795774884
+    ],
+    "negative_rmse_cell_fraction_percentiles_2p5_50_97p5": [
+      0.0,
+      0.0,
+      0.004081632653061225
+    ],
+    "bootstrap_success_probability": 1.0
+  }
+}

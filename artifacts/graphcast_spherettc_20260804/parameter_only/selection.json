@@ -1,0 +1,771 @@
+{
+  "created_at": "2026-08-04T08:50:35.285171+00:00",
+  "test_data_touched_by_selection": false,
+  "fallback_used": false,
+  "best_id": "l24_strength050",
+  "best_params": {
+    "min_memory": 24,
+    "holdout_fraction": 0.25,
+    "min_holdout": 8,
+    "robust_quantile_scale": 3.0,
+    "memory_size": 64,
+    "lmax": 24,
+    "mmax": 24,
+    "half_life": 32.0,
+    "ridge": 0.05,
+    "strength": 0.5,
+    "confidence_z": 0.5,
+    "max_scale_delta": 0.5,
+    "taper_power": 1.0
+  },
+  "validation_guards": {
+    "maximum_negative_rmse_cell_fraction": 0.02,
+    "minimum_macro_acc_delta": -0.0005
+  },
+  "candidates": [
+    {
+      "id": "frozen_l24_m64_h32",
+      "params": {
+        "min_memory": 24,
+        "holdout_fraction": 0.25,
+        "min_holdout": 8,
+        "robust_quantile_scale": 3.0,
+        "memory_size": 64,
+        "lmax": 24,
+        "mmax": 24,
+        "half_life": 32.0,
+        "ridge": 0.05,
+        "strength": 1.0,
+        "confidence_z": 0.5,
+        "max_scale_delta": 0.5,
+        "taper_power": 1.0
+      },
+      "eligible": false,
+      "scored_initializations": 245,
+      "cell_count": 245,
+      "mean_relative_rmse_gain": 0.025176930486802772,
+      "median_relative_rmse_gain": 0.01414962053399238,
+      "minimum_relative_rmse_gain": 0.0,
+      "negative_rmse_cells": 0,
+      "negative_rmse_cell_fraction": 0.0,
+      "mean_acc_delta": -0.002641004774677681,
+      "minimum_acc_delta": -0.027213369008021238,
+      "negative_acc_cells": 94,
+      "mean_calibration_gate": 0.3805718719959259,
+      "by_lead": {
+        "24": {
+          "mean_relative_rmse_gain": 0.03743454740707029,
+          "negative_rmse_cells": 0,
+          "mean_acc_delta": 0.0010316742218967362,
+          "negative_acc_cells": 0
+        },
+        "72": {
+          "mean_relative_rmse_gain": 0.0068124889236897855,
+          "negative_rmse_cells": 0,
+          "mean_acc_delta": 0.0006559867428932442,
+          "negative_acc_cells": 0
+        },
+        "120": {
+          "mean_relative_rmse_gain": 0.0034132558361493963,
+          "negative_rmse_cells": 0,
+          "mean_acc_delta": 0.00043583092508209356,
+          "negative_acc_cells": 14
+        },
+        "168": {
+          "mean_relative_rmse_gain": 0.017036559968012628,
+          "negative_rmse_cells": 0,
+          "mean_acc_delta": -0.0019877441780011625,
+          "negative_acc_cells": 37
+        },
+        "240": {
+          "mean_relative_rmse_gain": 0.061187800299091745,
+          "negative_rmse_cells": 0,
+          "mean_acc_delta": -0.013340771585259318,
+          "negative_acc_cells": 43
+        }
+      }
+    },
+    {
+      "id": "l32_m64_h32",
+      "params": {
+        "min_memory": 24,
+        "holdout_fraction": 0.25,
+        "min_holdout": 8,
+        "robust_quantile_scale": 3.0,
+        "memory_size": 64,
+        "lmax": 32,
+        "mmax": 32,
+        "half_life": 32.0,
+        "ridge": 0.05,
+        "strength": 1.0,
+        "confidence_z": 0.5,
+        "max_scale_delta": 0.5,
+        "taper_power": 1.0
+      },
+      "eligible": false,
+      "scored_initializations": 245,
+      "cell_count": 245,
+      "mean_relative_rmse_gain": 0.030597775611076468,
+      "median_relative_rmse_gain": 0.017680881217152944,
+      "minimum_relative_rmse_gain": 0.0,
+      "negative_rmse_cells": 0,
+      "negative_rmse_cell_fraction": 0.0,
+      "mean_acc_delta": -0.0021001403031177313,
+      "minimum_acc_delta": -0.02524206719218347,
+      "negative_acc_cells": 83,
+      "mean_calibration_gate": 0.39316508173942566,
+      "by_lead": {
+        "24": {
+          "mean_relative_rmse_gain": 0.04367504960676012,
+          "negative_rmse_cells": 0,
+          "mean_acc_delta": 0.0012135491292136508,
+          "negative_acc_cells": 0
+        },
+        "72": {
+          "mean_relative_rmse_gain": 0.007644011471036809,
+          "negative_rmse_cells": 0,
+          "mean_acc_delta": 0.0007281333597457574,
+          "negative_acc_cells": 0
+        },
+        "120": {
+          "mean_relative_rmse_gain": 0.005095769629843795,
+          "negative_rmse_cells": 0,
+          "mean_acc_delta": 0.0005377621887318822,
+          "negative_acc_cells": 7
+        },
+        "168": {
+          "mean_relative_rmse_gain": 0.02404651485206462,
+          "negative_rmse_cells": 0,
+          "mean_acc_delta": -0.0013495608402688717,
+          "negative_acc_cells": 34
+        },
+        "240": {
+          "mean_relative_rmse_gain": 0.072527532495677,
+          "negative_rmse_cells": 0,
+          "mean_acc_delta": -0.011630585353011076,
+          "negative_acc_cells": 42
+        }
+      }
+    },
+    {
+      "id": "l40_m64_h32",
+      "params": {
+        "min_memory": 24,
+        "holdout_fraction": 0.25,
+        "min_holdout": 8,
+        "robust_quantile_scale": 3.0,
+        "memory_size": 64,
+        "lmax": 40,
+        "mmax": 40,
+        "half_life": 32.0,
+        "ridge": 0.05,
+        "strength": 1.0,
+        "confidence_z": 0.5,
+        "max_scale_delta": 0.5,
+        "taper_power": 1.0
+      },
+      "eligible": false,
+      "scored_initializations": 245,
+      "cell_count": 245,
+      "mean_relative_rmse_gain": 0.03387267344388,
+      "median_relative_rmse_gain": 0.019446481296195306,
+      "minimum_relative_rmse_gain": 0.0,
+      "negative_rmse_cells": 0,
+      "negative_rmse_cell_fraction": 0.0,
+      "mean_acc_delta": -0.0015079851751533507,
+      "minimum_acc_delta": -0.022323618228215825,
+      "negative_acc_cells": 74,
+      "mean_calibration_gate": 0.40031954646110535,
+      "by_lead": {
+        "24": {
+          "mean_relative_rmse_gain": 0.04666640556250261,
+          "negative_rmse_cells": 0,
+          "mean_acc_delta": 0.0013100378460615108,
+          "negative_acc_cells": 0
+        },
+        "72": {
+          "mean_relative_rmse_gain": 0.008137784747815206,
+          "negative_rmse_cells": 0,
+          "mean_acc_delta": 0.0007748419494550418,
+          "negative_acc_cells": 0
+        },
+        "120": {
+          "mean_relative_rmse_gain": 0.006810891412931926,
+          "negative_rmse_cells": 0,
+          "mean_acc_delta": 0.0007178887604043278,
+          "negative_acc_cells": 7
+        },
+        "168": {
+          "mean_relative_rmse_gain": 0.028675688302754486,
+          "negative_rmse_cells": 0,
+          "mean_acc_delta": -0.00046514860506706245,
+          "negative_acc_cells": 26
+        },
+        "240": {
+          "mean_relative_rmse_gain": 0.0790725971933958,
+          "negative_rmse_cells": 0,
+          "mean_acc_delta": -0.009877545826620572,
+          "negative_acc_cells": 41
+        }
+      }
+    },
+    {
+      "id": "l24_m96_h48",
+      "params": {
+        "min_memory": 24,
+        "holdout_fraction": 0.25,
+        "min_holdout": 8,
+        "robust_quantile_scale": 3.0,
+        "memory_size": 96,
+        "lmax": 24,
+        "mmax": 24,
+        "half_life": 48.0,
+        "ridge": 0.05,
+        "strength": 1.0,
+        "confidence_z": 0.5,
+        "max_scale_delta": 0.5,
+        "taper_power": 1.0
+      },
+      "eligible": false,
+      "scored_initializations": 245,
+      "cell_count": 245,
+      "mean_relative_rmse_gain": 0.02735684250100664,
+      "median_relative_rmse_gain": 0.016910145613389438,
+      "minimum_relative_rmse_gain": 0.0,
+      "negative_rmse_cells": 0,
+      "negative_rmse_cell_fraction": 0.0,
+      "mean_acc_delta": -0.00226795954782146,
+      "minimum_acc_delta": -0.025700750747597145,
+      "negative_acc_cells": 93,
+      "mean_calibration_gate": 0.44526609778404236,
+      "by_lead": {
+        "24": {
+          "mean_relative_rmse_gain": 0.038115715698057655,
+          "negative_rmse_cells": 0,
+          "mean_acc_delta": 0.0010410052058960786,
+          "negative_acc_cells": 0
+        },
+        "72": {
+          "mean_relative_rmse_gain": 0.008885472032631701,
+          "negative_rmse_cells": 0,
+          "mean_acc_delta": 0.0007781713714694865,
+          "negative_acc_cells": 0
+        },
+        "120": {
+          "mean_relative_rmse_gain": 0.004971944958858831,
+          "negative_rmse_cells": 0,
+          "mean_acc_delta": 0.0004040650265141876,
+          "negative_acc_cells": 14
+        },
+        "168": {
+          "mean_relative_rmse_gain": 0.020821766498914124,
+          "negative_rmse_cells": 0,
+          "mean_acc_delta": -0.0018961071054246356,
+          "negative_acc_cells": 38
+        },
+        "240": {
+          "mean_relative_rmse_gain": 0.06398931331657087,
+          "negative_rmse_cells": 0,
+          "mean_acc_delta": -0.011666932237562419,
+          "negative_acc_cells": 41
+        }
+      }
+    },
+    {
+      "id": "l32_m96_h48",
+      "params": {
+        "min_memory": 24,
+        "holdout_fraction": 0.25,
+        "min_holdout": 8,
+        "robust_quantile_scale": 3.0,
+        "memory_size": 96,
+        "lmax": 32,
+        "mmax": 32,
+        "half_life": 48.0,
+        "ridge": 0.05,
+        "strength": 1.0,
+        "confidence_z": 0.5,
+        "max_scale_delta": 0.5,
+        "taper_power": 1.0
+      },
+      "eligible": false,
+      "scored_initializations": 245,
+      "cell_count": 245,
+      "mean_relative_rmse_gain": 0.03338481301052908,
+      "median_relative_rmse_gain": 0.020447863825281742,
+      "minimum_relative_rmse_gain": 0.0,
+      "negative_rmse_cells": 0,
+      "negative_rmse_cell_fraction": 0.0,
+      "mean_acc_delta": -0.0015031311456247616,
+      "minimum_acc_delta": -0.023049516952434568,
+      "negative_acc_cells": 75,
+      "mean_calibration_gate": 0.4599674642086029,
+      "by_lead": {
+        "24": {
+          "mean_relative_rmse_gain": 0.044595469273051726,
+          "negative_rmse_cells": 0,
+          "mean_acc_delta": 0.0012294160666374576,
+          "negative_acc_cells": 0
+        },
+        "72": {
+          "mean_relative_rmse_gain": 0.010215792908749527,
+          "negative_rmse_cells": 0,
+          "mean_acc_delta": 0.0008878043204050732,
+          "negative_acc_cells": 0
+        },
+        "120": {
+          "mean_relative_rmse_gain": 0.00781477973606509,
+          "negative_rmse_cells": 0,
+          "mean_acc_delta": 0.0006448433078493416,
+          "negative_acc_cells": 5
+        },
+        "168": {
+          "mean_relative_rmse_gain": 0.028472415619016807,
+          "negative_rmse_cells": 0,
+          "mean_acc_delta": -0.0008468154829799957,
+          "negative_acc_cells": 30
+        },
+        "240": {
+          "mean_relative_rmse_gain": 0.0758256075157622,
+          "negative_rmse_cells": 0,
+          "mean_acc_delta": -0.009430903940035686,
+          "negative_acc_cells": 40
+        }
+      }
+    },
+    {
+      "id": "l24_m128_h64",
+      "params": {
+        "min_memory": 24,
+        "holdout_fraction": 0.25,
+        "min_holdout": 8,
+        "robust_quantile_scale": 3.0,
+        "memory_size": 128,
+        "lmax": 24,
+        "mmax": 24,
+        "half_life": 64.0,
+        "ridge": 0.05,
+        "strength": 1.0,
+        "confidence_z": 0.5,
+        "max_scale_delta": 0.5,
+        "taper_power": 1.0
+      },
+      "eligible": false,
+      "scored_initializations": 245,
+      "cell_count": 245,
+      "mean_relative_rmse_gain": 0.0283202017919776,
+      "median_relative_rmse_gain": 0.017822313224412967,
+      "minimum_relative_rmse_gain": 0.0,
+      "negative_rmse_cells": 0,
+      "negative_rmse_cell_fraction": 0.0,
+      "mean_acc_delta": -0.0020416249152718806,
+      "minimum_acc_delta": -0.025334968621228693,
+      "negative_acc_cells": 86,
+      "mean_calibration_gate": 0.4821924865245819,
+      "by_lead": {
+        "24": {
+          "mean_relative_rmse_gain": 0.03820448781947717,
+          "negative_rmse_cells": 0,
+          "mean_acc_delta": 0.0010290969509444301,
+          "negative_acc_cells": 0
+        },
+        "72": {
+          "mean_relative_rmse_gain": 0.009626351955726628,
+          "negative_rmse_cells": 0,
+          "mean_acc_delta": 0.0007982506903811652,
+          "negative_acc_cells": 0
+        },
+        "120": {
+          "mean_relative_rmse_gain": 0.006035352038081292,
+          "negative_rmse_cells": 0,
+          "mean_acc_delta": 0.00038167655400361936,
+          "negative_acc_cells": 14
+        },
+        "168": {
+          "mean_relative_rmse_gain": 0.022648325279630975,
+          "negative_rmse_cells": 0,
+          "mean_acc_delta": -0.0017668390261577275,
+          "negative_acc_cells": 32
+        },
+        "240": {
+          "mean_relative_rmse_gain": 0.06508649186697194,
+          "negative_rmse_cells": 0,
+          "mean_acc_delta": -0.010650309745530892,
+          "negative_acc_cells": 40
+        }
+      }
+    },
+    {
+      "id": "l24_strength075",
+      "params": {
+        "min_memory": 24,
+        "holdout_fraction": 0.25,
+        "min_holdout": 8,
+        "robust_quantile_scale": 3.0,
+        "memory_size": 64,
+        "lmax": 24,
+        "mmax": 24,
+        "half_life": 32.0,
+        "ridge": 0.05,
+        "strength": 0.75,
+        "confidence_z": 0.5,
+        "max_scale_delta": 0.5,
+        "taper_power": 1.0
+      },
+      "eligible": false,
+      "scored_initializations": 245,
+      "cell_count": 245,
+      "mean_relative_rmse_gain": 0.02152584026372909,
+      "median_relative_rmse_gain": 0.01205861493737026,
+      "minimum_relative_rmse_gain": 0.0,
+      "negative_rmse_cells": 0,
+      "negative_rmse_cell_fraction": 0.0,
+      "mean_acc_delta": -0.0010925227645257247,
+      "minimum_acc_delta": -0.016424885979147097,
+      "negative_acc_cells": 86,
+      "mean_calibration_gate": 0.28542888164520264,
+      "by_lead": {
+        "24": {
+          "mean_relative_rmse_gain": 0.031070128649398163,
+          "negative_rmse_cells": 0,
+          "mean_acc_delta": 0.0008566199666068746,
+          "negative_acc_cells": 0
+        },
+        "72": {
+          "mean_relative_rmse_gain": 0.0056638530866268775,
+          "negative_rmse_cells": 0,
+          "mean_acc_delta": 0.0005511064229093171,
+          "negative_acc_cells": 0
+        },
+        "120": {
+          "mean_relative_rmse_gain": 0.0030129286387262167,
+          "negative_rmse_cells": 0,
+          "mean_acc_delta": 0.0004343774366563918,
+          "negative_acc_cells": 13
+        },
+        "168": {
+          "mean_relative_rmse_gain": 0.014588750893681205,
+          "negative_rmse_cells": 0,
+          "mean_acc_delta": -0.0008727708529880533,
+          "negative_acc_cells": 35
+        },
+        "240": {
+          "mean_relative_rmse_gain": 0.053293540050213,
+          "negative_rmse_cells": 0,
+          "mean_acc_delta": -0.006431946795813153,
+          "negative_acc_cells": 38
+        }
+      }
+    },
+    {
+      "id": "l24_strength050",
+      "params": {
+        "min_memory": 24,
+        "holdout_fraction": 0.25,
+        "min_holdout": 8,
+        "robust_quantile_scale": 3.0,
+        "memory_size": 64,
+        "lmax": 24,
+        "mmax": 24,
+        "half_life": 32.0,
+        "ridge": 0.05,
+        "strength": 0.5,
+        "confidence_z": 0.5,
+        "max_scale_delta": 0.5,
+        "taper_power": 1.0
+      },
+      "eligible": true,
+      "scored_initializations": 245,
+      "cell_count": 245,
+      "mean_relative_rmse_gain": 0.01606334455706265,
+      "median_relative_rmse_gain": 0.00868769078280529,
+      "minimum_relative_rmse_gain": 0.0,
+      "negative_rmse_cells": 0,
+      "negative_rmse_cell_fraction": 0.0,
+      "mean_acc_delta": -0.00022196545323227047,
+      "minimum_acc_delta": -0.00871638213923942,
+      "negative_acc_cells": 72,
+      "mean_calibration_gate": 0.19028593599796295,
+      "by_lead": {
+        "24": {
+          "mean_relative_rmse_gain": 0.02263753491806463,
+          "negative_rmse_cells": 0,
+          "mean_acc_delta": 0.0006262606963304138,
+          "negative_acc_cells": 0
+        },
+        "72": {
+          "mean_relative_rmse_gain": 0.004143033033593909,
+          "negative_rmse_cells": 0,
+          "mean_acc_delta": 0.000406789414256976,
+          "negative_acc_cells": 0
+        },
+        "120": {
+          "mean_relative_rmse_gain": 0.0023086114099823024,
+          "negative_rmse_cells": 0,
+          "mean_acc_delta": 0.0003609037505089484,
+          "negative_acc_cells": 12
+        },
+        "168": {
+          "mean_relative_rmse_gain": 0.010922048111289565,
+          "negative_rmse_cells": 0,
+          "mean_acc_delta": -0.00019148998889465145,
+          "negative_acc_cells": 28
+        },
+        "240": {
+          "mean_relative_rmse_gain": 0.040305495312382825,
+          "negative_rmse_cells": 0,
+          "mean_acc_delta": -0.002312291138363039,
+          "negative_acc_cells": 32
+        }
+      }
+    },
+    {
+      "id": "l24_conf075",
+      "params": {
+        "min_memory": 24,
+        "holdout_fraction": 0.25,
+        "min_holdout": 8,
+        "robust_quantile_scale": 3.0,
+        "memory_size": 64,
+        "lmax": 24,
+        "mmax": 24,
+        "half_life": 32.0,
+        "ridge": 0.05,
+        "strength": 1.0,
+        "confidence_z": 0.75,
+        "max_scale_delta": 0.5,
+        "taper_power": 1.0
+      },
+      "eligible": false,
+      "scored_initializations": 245,
+      "cell_count": 245,
+      "mean_relative_rmse_gain": 0.024293607520529545,
+      "median_relative_rmse_gain": 0.012734954283796784,
+      "minimum_relative_rmse_gain": 0.0,
+      "negative_rmse_cells": 0,
+      "negative_rmse_cell_fraction": 0.0,
+      "mean_acc_delta": -0.0024105415844003024,
+      "minimum_acc_delta": -0.02580750216342903,
+      "negative_acc_cells": 94,
+      "mean_calibration_gate": 0.3547196090221405,
+      "by_lead": {
+        "24": {
+          "mean_relative_rmse_gain": 0.036591203435701006,
+          "negative_rmse_cells": 0,
+          "mean_acc_delta": 0.0010031864355159923,
+          "negative_acc_cells": 0
+        },
+        "72": {
+          "mean_relative_rmse_gain": 0.006047135998845387,
+          "negative_rmse_cells": 0,
+          "mean_acc_delta": 0.0005915715174460978,
+          "negative_acc_cells": 0
+        },
+        "120": {
+          "mean_relative_rmse_gain": 0.0030122955860496493,
+          "negative_rmse_cells": 0,
+          "mean_acc_delta": 0.00042085532404164387,
+          "negative_acc_cells": 14
+        },
+        "168": {
+          "mean_relative_rmse_gain": 0.015806614876880735,
+          "negative_rmse_cells": 0,
+          "mean_acc_delta": -0.001710112049748997,
+          "negative_acc_cells": 37
+        },
+        "240": {
+          "mean_relative_rmse_gain": 0.06001078770517096,
+          "negative_rmse_cells": 0,
+          "mean_acc_delta": -0.01235820914925625,
+          "negative_acc_cells": 43
+        }
+      }
+    },
+    {
+      "id": "l24_taper050",
+      "params": {
+        "min_memory": 24,
+        "holdout_fraction": 0.25,
+        "min_holdout": 8,
+        "robust_quantile_scale": 3.0,
+        "memory_size": 64,
+        "lmax": 24,
+        "mmax": 24,
+        "half_life": 32.0,
+        "ridge": 0.05,
+        "strength": 1.0,
+        "confidence_z": 0.5,
+        "max_scale_delta": 0.5,
+        "taper_power": 0.5
+      },
+      "eligible": false,
+      "scored_initializations": 245,
+      "cell_count": 245,
+      "mean_relative_rmse_gain": 0.028532445514853184,
+      "median_relative_rmse_gain": 0.016114349358672397,
+      "minimum_relative_rmse_gain": 0.0,
+      "negative_rmse_cells": 0,
+      "negative_rmse_cell_fraction": 0.0,
+      "mean_acc_delta": -0.0025018303487271652,
+      "minimum_acc_delta": -0.027534843203958492,
+      "negative_acc_cells": 93,
+      "mean_calibration_gate": 0.3805718719959259,
+      "by_lead": {
+        "24": {
+          "mean_relative_rmse_gain": 0.04246205250428992,
+          "negative_rmse_cells": 0,
+          "mean_acc_delta": 0.0011747837024636066,
+          "negative_acc_cells": 0
+        },
+        "72": {
+          "mean_relative_rmse_gain": 0.007632336227809052,
+          "negative_rmse_cells": 0,
+          "mean_acc_delta": 0.000728536504671216,
+          "negative_acc_cells": 0
+        },
+        "120": {
+          "mean_relative_rmse_gain": 0.0037790043785886477,
+          "negative_rmse_cells": 0,
+          "mean_acc_delta": 0.00045109299727091315,
+          "negative_acc_cells": 14
+        },
+        "168": {
+          "mean_relative_rmse_gain": 0.020144594715260346,
+          "negative_rmse_cells": 0,
+          "mean_acc_delta": -0.001852738937794109,
+          "negative_acc_cells": 37
+        },
+        "240": {
+          "mean_relative_rmse_gain": 0.06864423974831795,
+          "negative_rmse_cells": 0,
+          "mean_acc_delta": -0.013010826010247454,
+          "negative_acc_cells": 42
+        }
+      }
+    },
+    {
+      "id": "l24_delta025",
+      "params": {
+        "min_memory": 24,
+        "holdout_fraction": 0.25,
+        "min_holdout": 8,
+        "robust_quantile_scale": 3.0,
+        "memory_size": 64,
+        "lmax": 24,
+        "mmax": 24,
+        "half_life": 32.0,
+        "ridge": 0.05,
+        "strength": 1.0,
+        "confidence_z": 0.5,
+        "max_scale_delta": 0.25,
+        "taper_power": 1.0
+      },
+      "eligible": false,
+      "scored_initializations": 245,
+      "cell_count": 245,
+      "mean_relative_rmse_gain": 0.02170476891786188,
+      "median_relative_rmse_gain": 0.01416517275743967,
+      "minimum_relative_rmse_gain": 0.0,
+      "negative_rmse_cells": 0,
+      "negative_rmse_cell_fraction": 0.0,
+      "mean_acc_delta": -0.0015175767012190833,
+      "minimum_acc_delta": -0.015898510420917,
+      "negative_acc_cells": 94,
+      "mean_calibration_gate": 0.41952499747276306,
+      "by_lead": {
+        "24": {
+          "mean_relative_rmse_gain": 0.03742630696899595,
+          "negative_rmse_cells": 0,
+          "mean_acc_delta": 0.0010313085627650688,
+          "negative_acc_cells": 0
+        },
+        "72": {
+          "mean_relative_rmse_gain": 0.006866586704484585,
+          "negative_rmse_cells": 0,
+          "mean_acc_delta": 0.0006678499186046429,
+          "negative_acc_cells": 0
+        },
+        "120": {
+          "mean_relative_rmse_gain": 0.003832775308457266,
+          "negative_rmse_cells": 0,
+          "mean_acc_delta": 0.0004849514086446509,
+          "negative_acc_cells": 14
+        },
+        "168": {
+          "mean_relative_rmse_gain": 0.016717306407909558,
+          "negative_rmse_cells": 0,
+          "mean_acc_delta": -0.002623035793208933,
+          "negative_acc_cells": 38
+        },
+        "240": {
+          "mean_relative_rmse_gain": 0.04368086919946203,
+          "negative_rmse_cells": 0,
+          "mean_acc_delta": -0.007148957602900846,
+          "negative_acc_cells": 42
+        }
+      }
+    },
+    {
+      "id": "l24_ridge020",
+      "params": {
+        "min_memory": 24,
+        "holdout_fraction": 0.25,
+        "min_holdout": 8,
+        "robust_quantile_scale": 3.0,
+        "memory_size": 64,
+        "lmax": 24,
+        "mmax": 24,
+        "half_life": 32.0,
+        "ridge": 0.2,
+        "strength": 1.0,
+        "confidence_z": 0.5,
+        "max_scale_delta": 0.5,
+        "taper_power": 1.0
+      },
+      "eligible": false,
+      "scored_initializations": 245,
+      "cell_count": 245,
+      "mean_relative_rmse_gain": 0.02488114302443205,
+      "median_relative_rmse_gain": 0.013947262252537729,
+      "minimum_relative_rmse_gain": 0.0,
+      "negative_rmse_cells": 0,
+      "negative_rmse_cell_fraction": 0.0,
+      "mean_acc_delta": -0.0026283475088580365,
+      "minimum_acc_delta": -0.026793503265927276,
+      "negative_acc_cells": 95,
+      "mean_calibration_gate": 0.3981113135814667,
+      "by_lead": {
+        "24": {
+          "mean_relative_rmse_gain": 0.03656806421168621,
+          "negative_rmse_cells": 0,
+          "mean_acc_delta": 0.0010237649271255052,
+          "negative_acc_cells": 0
+        },
+        "72": {
+          "mean_relative_rmse_gain": 0.00711727803490378,
+          "negative_rmse_cells": 0,
+          "mean_acc_delta": 0.0006908161171444222,
+          "negative_acc_cells": 0
+        },
+        "120": {
+          "mean_relative_rmse_gain": 0.00361704966933556,
+          "negative_rmse_cells": 0,
+          "mean_acc_delta": 0.0004473854109967794,
+          "negative_acc_cells": 14
+        },
+        "168": {
+          "mean_relative_rmse_gain": 0.01654193424080742,
+          "negative_rmse_cells": 0,
+          "mean_acc_delta": -0.0021081388244226975,
+          "negative_acc_cells": 38
+        },
+        "240": {
+          "mean_relative_rmse_gain": 0.06056138896542728,
+          "negative_rmse_cells": 0,
+          "mean_acc_delta": -0.01319556517513419,
+          "negative_acc_cells": 43
+        }
+      }
+    }
+  ]
+}

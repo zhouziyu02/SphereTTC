@@ -1,0 +1,68 @@
+{
+  "scored_initializations": 730,
+  "cell_count": 245,
+  "mean_relative_rmse_gain": 0.015481688882891783,
+  "median_relative_rmse_gain": 0.007551489363709862,
+  "minimum_relative_rmse_gain": -1.4673997572600683e-09,
+  "negative_rmse_cells": 1,
+  "negative_rmse_cell_fraction": 0.004081632653061225,
+  "mean_acc_delta": -1.117280618462257e-05,
+  "minimum_acc_delta": -0.0072326399969666055,
+  "negative_acc_cells": 55,
+  "mean_calibration_gate": 0.18152256309986115,
+  "by_lead": {
+    "24": {
+      "mean_relative_rmse_gain": 0.021942140290206563,
+      "negative_rmse_cells": 0,
+      "mean_acc_delta": 0.000600878109306977,
+      "negative_acc_cells": 0
+    },
+    "72": {
+      "mean_relative_rmse_gain": 0.003529463585881533,
+      "negative_rmse_cells": 1,
+      "mean_acc_delta": 0.0003463853855038953,
+      "negative_acc_cells": 0
+    },
+    "120": {
+      "mean_relative_rmse_gain": 0.002007957822103356,
+      "negative_rmse_cells": 0,
+      "mean_acc_delta": 0.00029327372946450674,
+      "negative_acc_cells": 3
+    },
+    "168": {
+      "mean_relative_rmse_gain": 0.010537123671724633,
+      "negative_rmse_cells": 0,
+      "mean_acc_delta": 4.0349000846296574e-05,
+      "negative_acc_cells": 21
+    },
+    "240": {
+      "mean_relative_rmse_gain": 0.039391759044542826,
+      "negative_rmse_cells": 0,
+      "mean_acc_delta": -0.0013367502560447885,
+      "negative_acc_cells": 31
+    }
+  },
+  "selected_id": "l24_strength050",
+  "selected_params": {
+    "min_memory": 24,
+    "holdout_fraction": 0.25,
+    "min_holdout": 8,
+    "robust_quantile_scale": 3.0,
+    "memory_size": 64,
+    "lmax": 24,
+    "mmax": 24,
+    "half_life": 32.0,
+    "ridge": 0.05,
+    "strength": 0.5,
+    "confidence_z": 0.5,
+    "max_scale_delta": 0.5,
+    "taper_power": 1.0
+  },
+  "primary_expected_effect_pass": false,
+  "strict_acc_pass": false,
+  "test_expectation": {
+    "minimum_mean_relative_rmse_gain": 0.02,
+    "maximum_negative_rmse_cell_fraction": 0.01,
+    "strict_minimum_macro_acc_delta": 0.0
+  }
+}

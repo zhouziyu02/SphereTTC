@@ -1,0 +1,148 @@
+{
+  "consolidated_at_utc": "2026-10-03T07:46:48.519038+00:00",
+  "description": "SphereTTC consolidated into src/spherettc.py and SphereDyn into src/spheredyn.py; superseded originals archived byte-identically.",
+  "moves": [
+    {
+      "from": "src/ttc/sphere.py",
+      "to": "archive/pre_consolidation_20261003/src/ttc/sphere.py",
+      "sha256": "5b153a4e6cbdff926bf227b093d614425c56559975381f7fa1c1bab84120faac"
+    },
+    {
+      "from": "src/ttc/memory.py",
+      "to": "archive/pre_consolidation_20261003/src/ttc/memory.py",
+      "sha256": "4c4c6af4c56fffddb0f59e2e01ef778491455985fa05612e0dcfd3f30d5a9430"
+    },
+    {
+      "from": "src/baselines/spheredyn_v2.py",
+      "to": "archive/pre_consolidation_20261003/src/baselines/spheredyn_v2.py",
+      "sha256": "832a7de3ec232b2e5f05898eb6f202bc1fd16420a1aaddb755d1dbc18df9627b"
+    },
+    {
+      "from": "src/baselines/spheredyn_v4.py",
+      "to": "archive/pre_consolidation_20261003/src/baselines/spheredyn_v4.py",
+      "sha256": "c719188b322f82d9f370571fa77b859d2d805f1f4de38e79c889baf0d2b67b7a"
+    },
+    {
+      "from": "src/baselines/spheredyn_v6.py",
+      "to": "archive/pre_consolidation_20261003/src/baselines/spheredyn_v6.py",
+      "sha256": "21b011fb9816c702f86c8828c54b43e38a1a14ae5bf1627b6e0785ad71a152c0"
+    },
+    {
+      "from": "src/baselines/spheredyn_v7.py",
+      "to": "archive/pre_consolidation_20261003/src/baselines/spheredyn_v7.py",
+      "sha256": "76ea9f1d990939f218e8da07a0b5cd963be4fda9d638c71bc1112cfb40d4bbb2"
+    },
+    {
+      "from": "src/baselines/spheredyn_v9.py",
+      "to": "archive/pre_consolidation_20261003/src/baselines/spheredyn_v9.py",
+      "sha256": "94f2112b9b9c55c48547b279a6f01525461dbe74c8eb6f5897910c160e7dc102"
+    },
+    {
+      "from": "tests/test_spheredyn_v9.py",
+      "to": "archive/pre_consolidation_20261003/tests/test_spheredyn_v9.py",
+      "sha256": "1d71fe14d29e928caa6d690ad472b9992707cb6a96c25a6d6a0527dc9cac0a13"
+    },
+    {
+      "from": "src/baselines/models.py",
+      "to": "archive/pre_consolidation_20261003/src/baselines/models.py",
+      "sha256": "61357b1925049efcc4bffac09daaba15298a12ba86e1e5d70ff657f95e3196f0"
+    },
+    {
+      "from": "scripts/spheredyn/evaluate_goal_reference_ensemble.py",
+      "to": "archive/pre_consolidation_20261003/scripts/spheredyn/evaluate_goal_reference_ensemble.py",
+      "sha256": "907adb725e3885c517c090acb8d78b8025575109651555432a4b5d22df536080"
+    }
+  ],
+  "edits": [
+    {
+      "file": "scripts/run_ttc.py",
+      "old": "from src.ttc.memory import EligibleMemory, assert_no_future_targets",
+      "new": "from src.spherettc import EligibleMemory, assert_no_future_targets",
+      "count": 1,
+      "sha256_before": "544045edc2f7c56d32313348d6c48c72d0dfed4c5159feb180e344e1cd5b08ec",
+      "sha256_after": "425f0c76c948eb89a108d947ffbf71a718ab17bcc89ffd31162e020d061912e3"
+    },
+    {
+      "file": "scripts/run_ttc.py",
+      "old": "from src.ttc.sphere import SphereTTCConfig, SphereTTCCalibrator",
+      "new": "from src.spherettc import SphereTTCConfig, SphereTTCCalibrator",
+      "count": 1,
+      "sha256_before": "425f0c76c948eb89a108d947ffbf71a718ab17bcc89ffd31162e020d061912e3",
+      "sha256_after": "b2856dab8639c361bba37cc902097ab91e56d08aa80a52343af3cb85ebee1b35"
+    },
+    {
+      "file": "scripts/run_ttc.py",
+      "old": "def _eligible_from_buffer(buffer, current, memory_size):\n    current = np.datetime64(current)\n    eligible = [item for item in buffer if np.datetime64(item[0]) <= current]\n    if memory_size is not None:\n        eligible = eligible[-int(memory_size) :]\n    return eligible\n",
+      "new": "# The causal memory-admission rule lives in src/spherettc.py (single source of truth).\nfrom src.spherettc import eligible_from_buffer as _eligible_from_buffer  # noqa: E402\n",
+      "count": 1,
+      "sha256_before": "b2856dab8639c361bba37cc902097ab91e56d08aa80a52343af3cb85ebee1b35",
+      "sha256_after": "3a9dcd4b6de6a4bf436f8b773dabff6e0de1d0779fb7ab3d20f03df8ebd4825a"
+    },
+    {
+      "file": "src/ttc/legacy/sphere_v2.py",
+      "old": "from src.ttc.sphere import _complex_delta_clamp",
+      "new": "from src.spherettc import _complex_delta_clamp",
+      "count": 1,
+      "sha256_before": "46a5d2d3adf364500c6f51da23725f469cf88193f03cdf8bc98b7030b484d172",
+      "sha256_after": "0532d8104187b6e6556e56effe8a5116d46e2fff9f3e1fb80f518a12cf60b770"
+    },
+    {
+      "file": "src/ttc/legacy/sphere_v3.py",
+      "old": "from src.ttc.sphere import _complex_delta_clamp",
+      "new": "from src.spherettc import _complex_delta_clamp",
+      "count": 1,
+      "sha256_before": "4ce1d06975786e9d54aa5f38a095e50a5c9936cc163d1fb0332d19358ea145e7",
+      "sha256_after": "8e1fcd30320c7d1be1f9368fd14608443261a64ff21d648775dcd1ed11a75a4d"
+    },
+    {
+      "file": "src/ttc/legacy/sphere_v4.py",
+      "old": "from src.ttc.sphere import _complex_delta_clamp",
+      "new": "from src.spherettc import _complex_delta_clamp",
+      "count": 1,
+      "sha256_before": "7b3764707511928eed66f586597fc71d33568a5ad1707f94accdd5905e030a94",
+      "sha256_after": "7ab789968f6bc4708a6331a2d502b65bb5fe40997d242574d98b4c78da4721b5"
+    },
+    {
+      "file": "tests/test_sphere_ttc.py",
+      "old": "from src.ttc.sphere import SphereTTCConfig, SphereTTCCalibrator",
+      "new": "from src.spherettc import SphereTTCConfig, SphereTTCCalibrator",
+      "count": 1,
+      "sha256_before": "ae43b73bb5f3b77bf1b396c6ba60685af5c5255f837a5dfbec0a848b41548ac7",
+      "sha256_after": "de60a3ba5dcf84553d9282b860011388e554936877a410b9b15abe193b703016"
+    },
+    {
+      "file": "tests/test_no_leakage_memory.py",
+      "old": "from src.ttc.memory import EligibleMemory",
+      "new": "from src.spherettc import EligibleMemory",
+      "count": 1,
+      "sha256_before": "910df4dbf6b1ff8f7557a2e796041dd8af307a29d39df09a10d0e66e79e8937c",
+      "sha256_after": "881eca8b299526194c26668ce4391a72330cda6517ae481c4d7d6ba1b442df09"
+    },
+    {
+      "file": "src/ttc/__init__.py",
+      "old": "\"\"\"Test-time calibration methods.\"\"\"",
+      "new": "\"\"\"Evaluation metrics, comparison TTC methods and legacy SphereTTC variants.\n\nThe final SphereTTC module is src/spherettc.py.\n\"\"\"",
+      "count": 1,
+      "sha256_before": "eddc7aaac159527bb1276a7b8c0742d585863cbddfa5553d370a24636076261d",
+      "sha256_after": "75604202c749306b79cf66e6a33c07fe19759080b954006c9f6fa94eff82750f"
+    }
+  ],
+  "replaced": [
+    {
+      "file": "src/baselines/models.py",
+      "original_archived_as": "archive/pre_consolidation_20261003/src/baselines/models.py",
+      "sha256": "6e353fad7acdf04947600fb5a87213ca0ace0019e0418ba637765b01368aa968"
+    },
+    {
+      "file": "scripts/spheredyn/evaluate_goal_reference_ensemble.py",
+      "original_archived_as": "archive/pre_consolidation_20261003/scripts/spheredyn/evaluate_goal_reference_ensemble.py",
+      "sha256": "6c6a6e102534834ce220a61cba93a32b03604dfbced5beae08fae0e9e344ad9a"
+    }
+  ],
+  "added_files": [
+    "src/spherettc.py",
+    "src/spheredyn.py",
+    "tests/test_spheredyn.py",
+    "tests/test_consolidation_equivalence.py"
+  ]
+}

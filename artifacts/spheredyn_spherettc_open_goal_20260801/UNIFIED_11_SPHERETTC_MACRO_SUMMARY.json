@@ -1,0 +1,111 @@
+{
+  "status": "DERIVED_REPORT_FROM_FROZEN_EXISTING_RESULTS",
+  "source_table": "../ttc_publication_corrected_20260726/results/MAIN_RESULTS.csv",
+  "source_completeness_audit": "../ttc_publication_corrected_20260726/results/TABLE_COMPLETENESS_AUDIT.json",
+  "full_49_variable_markdown": "MAIN_RESULTS_49_VARIABLES_ZH.md",
+  "normalization_stats": "main_prediction_v2_seed44/frozen_inputs/s2s_daily_54var_stats.json",
+  "period": "2018-01-01/2019-12-31",
+  "initializations": 730,
+  "variables": 49,
+  "lead_hours": [24, 72, 120, 168, 240],
+  "metric": "equal-weight mean of physical RMSE divided by 1979-2016 fit-split variable standard deviation over 5 leads and 49 variables",
+  "models": 11,
+  "methods": ["raw", "sphere_ttc"],
+  "expected_source_rows": 5390,
+  "source_complete": true,
+  "all_11_macro_nrmse_improved": true,
+  "unweighted_mean_relative_gain_percent": 4.067664874539805,
+  "results": [
+    {
+      "model": "convlstm",
+      "raw_macro_nrmse": 0.469845751590348,
+      "sphere_ttc_macro_nrmse": 0.465347324372579,
+      "gain_percent": 0.9574263899466251,
+      "improved_lead_variable_cells": 237,
+      "total_lead_variable_cells": 245
+    },
+    {
+      "model": "transformer",
+      "raw_macro_nrmse": 0.46380949021188006,
+      "sphere_ttc_macro_nrmse": 0.45893642820238273,
+      "gain_percent": 1.050660262960812,
+      "improved_lead_variable_cells": 207,
+      "total_lead_variable_cells": 245
+    },
+    {
+      "model": "fno",
+      "raw_macro_nrmse": 0.4427424269642629,
+      "sphere_ttc_macro_nrmse": 0.44032296415288863,
+      "gain_percent": 0.5464718680709524,
+      "improved_lead_variable_cells": 215,
+      "total_lead_variable_cells": 245
+    },
+    {
+      "model": "vit",
+      "raw_macro_nrmse": 0.4476881422629487,
+      "sphere_ttc_macro_nrmse": 0.44648640096431363,
+      "gain_percent": 0.2684326845380669,
+      "improved_lead_variable_cells": 186,
+      "total_lead_variable_cells": 245
+    },
+    {
+      "model": "cirt",
+      "raw_macro_nrmse": 0.4605401060048284,
+      "sphere_ttc_macro_nrmse": 0.4600894428204847,
+      "gain_percent": 0.09785536123080307,
+      "improved_lead_variable_cells": 143,
+      "total_lead_variable_cells": 245
+    },
+    {
+      "model": "climode",
+      "raw_macro_nrmse": 0.47984818515322464,
+      "sphere_ttc_macro_nrmse": 0.47339774573123006,
+      "gain_percent": 1.3442667121758123,
+      "improved_lead_variable_cells": 223,
+      "total_lead_variable_cells": 245
+    },
+    {
+      "model": "fourcastnetv2",
+      "raw_macro_nrmse": 0.45000894808585995,
+      "sphere_ttc_macro_nrmse": 0.36081447218097035,
+      "gain_percent": 19.820600520119356,
+      "improved_lead_variable_cells": 245,
+      "total_lead_variable_cells": 245
+    },
+    {
+      "model": "oneforecast",
+      "raw_macro_nrmse": 0.3120377700673371,
+      "sphere_ttc_macro_nrmse": 0.29937904984167646,
+      "gain_percent": 4.056791016974925,
+      "improved_lead_variable_cells": 245,
+      "total_lead_variable_cells": 245
+    },
+    {
+      "model": "fuxi",
+      "raw_macro_nrmse": 0.3253286575799248,
+      "sphere_ttc_macro_nrmse": 0.2934609854376558,
+      "gain_percent": 9.79553181060907,
+      "improved_lead_variable_cells": 226,
+      "total_lead_variable_cells": 245
+    },
+    {
+      "model": "pangu",
+      "raw_macro_nrmse": 0.2982871993809962,
+      "sphere_ttc_macro_nrmse": 0.2872651039310331,
+      "gain_percent": 3.6951285448507565,
+      "improved_lead_variable_cells": 243,
+      "total_lead_variable_cells": 245
+    },
+    {
+      "model": "graphcast",
+      "raw_macro_nrmse": 0.29172171357118953,
+      "sphere_ttc_macro_nrmse": 0.28264581800559657,
+      "gain_percent": 3.1111484484606766,
+      "improved_lead_variable_cells": 243,
+      "total_lead_variable_cells": 245
+    }
+  ],
+  "interpretation": "All eleven baselines improve in aggregate macro nRMSE after the publication SphereTTC calibration. This does not imply every individual lead-variable cell improves.",
+  "relation_to_v2": "Historical complete benchmark evidence; retained in the comprehensive report but not a hard pass/fail requirement of PROTOCOL_V2.json.",
+  "prospective_2023_touched": false
+}

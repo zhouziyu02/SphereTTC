@@ -1,0 +1,32 @@
+started_at=2026-08-04T09:23:57.133912+00:00
+physical_gpu=0
+command=/usr/bin/python /mnt/bn/czl-no-conda/mlx/users/ziyuzhou/SOON/scripts/run_ttc.py --config /mnt/bn/czl-no-conda/mlx/users/ziyuzhou/SOON/configs/unified_11model_ttc.yaml --model graphcast --cache /mnt/bn/czl-no-conda/mlx/users/ziyuzhou/SOON/artifacts/ttc_publication_corrected_20260726/official_daily_mean/cache/graphcast/forecast_cache_2017_121x240.zarr --truth-root /mnt/bn/czl-no-conda/mlx/users/ziyuzhou/SOON/data/S2S --truth-workers 4 --acc-climatology /mnt/bn/czl-no-conda/mlx/users/ziyuzhou/SOON/artifacts/ttc_publication_corrected_20260726/climatology/DAILY_DOY_1979_2016_COMMON49.npz --no-cache-output --metrics-output /mnt/bn/czl-no-conda/mlx/users/ziyuzhou/SOON_graphcast_schedule_20260804/metrics/validation/raw.npz --profile-output /mnt/bn/czl-no-conda/mlx/users/ziyuzhou/SOON_graphcast_schedule_20260804/profiles/validation_raw.json --method raw
+/mnt/bn/czl-no-conda/mlx/users/ziyuzhou/SOON/src/ttc/metrics.py:9: UserWarning: The given NumPy array is not writable, and PyTorch does not support non-writable tensors. This means writing to this tensor will result in undefined behavior. You may want to copy the array to protect its data or make it writable before converting it to a tensor. This type of warning will be suppressed for the rest of this program. (Triggered internally at /opt/tiger/compile_path/src/code.byted.org/pytorch/pytorch/torch/csrc/utils/tensor_numpy.cpp:203.)
+  lat_t = torch.as_tensor(lat, dtype=torch.float32, device=device)
+graphcast raw wrote init 16/365
+graphcast raw wrote init 32/365
+graphcast raw wrote init 48/365
+graphcast raw wrote init 64/365
+graphcast raw wrote init 80/365
+graphcast raw wrote init 96/365
+graphcast raw wrote init 112/365
+graphcast raw wrote init 128/365
+graphcast raw wrote init 144/365
+graphcast raw wrote init 160/365
+graphcast raw wrote init 176/365
+graphcast raw wrote init 192/365
+graphcast raw wrote init 208/365
+graphcast raw wrote init 224/365
+graphcast raw wrote init 240/365
+graphcast raw wrote init 256/365
+graphcast raw wrote init 272/365
+graphcast raw wrote init 288/365
+graphcast raw wrote init 304/365
+graphcast raw wrote init 320/365
+graphcast raw wrote init 336/365
+graphcast raw wrote init 352/365
+graphcast raw wrote init 365/365
+WROTE /mnt/bn/czl-no-conda/mlx/users/ziyuzhou/SOON_graphcast_schedule_20260804/metrics/validation/raw.npz
+PROFILE /mnt/bn/czl-no-conda/mlx/users/ziyuzhou/SOON_graphcast_schedule_20260804/profiles/validation_raw.json wall_seconds=100.839 cuda_peak_memory_gb=0.093
+finished_at=2026-08-04T09:25:43.108083+00:00
+returncode=0

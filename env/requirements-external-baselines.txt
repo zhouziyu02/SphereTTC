@@ -1,0 +1,4 @@
+# CirT official geometry-inspired transformer import
+timm==0.9.7
+# ClimODE neural-ODE dependency (the unified adapter uses its Euler-style ODE idea)
+torchdiffeq>=0.2.3

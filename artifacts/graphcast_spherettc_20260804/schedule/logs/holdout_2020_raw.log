@@ -1,0 +1,14 @@
+started_at=2026-08-04T12:42:18.119959+00:00
+physical_gpu=0
+command=/usr/bin/python /mnt/bn/czl-no-conda/mlx/users/ziyuzhou/SOON/scripts/run_ttc.py --config /mnt/bn/czl-no-conda/mlx/users/ziyuzhou/SOON/configs/unified_11model_ttc.yaml --model graphcast --cache /mnt/bn/czl-no-conda/mlx/users/ziyuzhou/SOON_graphcast_schedule_20260804/cache/graphcast_2020_current_a100.zarr --truth-root /mnt/bn/czl-no-conda/mlx/users/ziyuzhou/SOON_graphcast_schedule_20260804/data/S2S --truth-workers 4 --acc-climatology /mnt/bn/czl-no-conda/mlx/users/ziyuzhou/SOON/artifacts/ttc_publication_corrected_20260726/climatology/DAILY_DOY_1979_2016_COMMON49.npz --no-cache-output --metrics-output /mnt/bn/czl-no-conda/mlx/users/ziyuzhou/SOON_graphcast_schedule_20260804/metrics/holdout_2020/raw.npz --profile-output /mnt/bn/czl-no-conda/mlx/users/ziyuzhou/SOON_graphcast_schedule_20260804/profiles/holdout_2020_raw.json --method raw
+Traceback (most recent call last):
+  File "/mnt/bn/czl-no-conda/mlx/users/ziyuzhou/SOON/scripts/run_ttc.py", line 1566, in <module>
+    main()
+  File "/mnt/bn/czl-no-conda/mlx/users/ziyuzhou/SOON/scripts/run_ttc.py", line 349, in main
+    device = require_cuda(f"{args.method} TTC")
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/bn/czl-no-conda/mlx/users/ziyuzhou/SOON/src/utils/device.py", line 34, in require_cuda
+    raise RuntimeError(
+RuntimeError: CUDA is required for raw TTC; refusing to run formal inference/TTC/evaluation on CPU.
+finished_at=2026-08-04T12:42:21.164920+00:00
+returncode=1

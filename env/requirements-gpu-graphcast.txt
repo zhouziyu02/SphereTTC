@@ -1,0 +1,7 @@
+# Install the jaxlib build matching the destination CUDA driver first.
+# The frozen experiments were validated with jax/jaxlib 0.4.28.
+jax==0.4.28
+dm-haiku==0.0.12
+jraph==0.0.6.dev0
+chex==0.1.86
+-e ./external/graphcast_official

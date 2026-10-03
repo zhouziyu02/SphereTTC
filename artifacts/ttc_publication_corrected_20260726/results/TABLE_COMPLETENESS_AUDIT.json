@@ -1,0 +1,20 @@
+{
+  "models": 11,
+  "methods": 2,
+  "variables": 49,
+  "lead_times": [
+    24,
+    72,
+    120,
+    168,
+    240
+  ],
+  "rows": 5390,
+  "expected_rows": 5390,
+  "duplicate_key_rows": 0,
+  "nonfinite_rmse_or_acc_values": 0,
+  "n_initializations": [
+    730
+  ],
+  "complete": true
+}

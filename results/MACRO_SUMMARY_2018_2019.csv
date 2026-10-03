@@ -1,0 +1,26 @@
+rank,model,model_display_name,method,table,macro_nrmse,macro_acc,macro_nrmse_gain_vs_raw_percent,mean_cell_rmse_gain_percent,rmse_improved_cells_of_245,acc_improved_cells_of_245,uses_external_reference_forecasts,note
+1,graphcast,GraphCast-small 1°,sphere_ttc,latest,0.278398,0.800367,4.5673,3.3834,237,218,no,SOTA A: SphereTTC plug-in (global l64_s08)
+2,graphcast,GraphCast-small 1°,sphere_ttc,frozen_original_superseded,0.282646,0.796771,3.1111,2.4346,243,151,no,publication SphereTTC lmax=24 (superseded by l64_s08)
+3,spheredyn_v9,SphereDyn-v9 (seed 44),sphere_ttc_v22,latest,0.284578,0.808002,25.2829,27.9443,245,245,yes,SOTA B: SphereDyn + SphereTTC-v22 (multi-provider constrained mode); best macro ACC
+4,pangu,pangu,sphere_ttc,latest,0.287265,0.788252,3.6951,3.1535,243,170,no,SOTA A: SphereTTC plug-in (publication params)
+5,graphcast,GraphCast-small 1°,raw,latest,0.291722,0.798825,,,,,no,
+6,fuxi,fuxi,sphere_ttc,latest,0.293461,0.796508,9.7955,5.1998,226,203,no,SOTA A: SphereTTC plug-in (publication params)
+7,pangu,pangu,raw,latest,0.298287,0.788941,,,,,no,
+8,oneforecast,oneforecast,sphere_ttc,latest,0.299379,0.773594,4.0568,3.5569,245,172,no,SOTA A: SphereTTC plug-in (publication params)
+9,oneforecast,oneforecast,raw,latest,0.312038,0.773969,,,,,no,
+10,fuxi,fuxi,raw,latest,0.325329,0.791222,,,,,no,
+11,fourcastnetv2,fourcastnetv2,sphere_ttc,latest,0.360814,0.697208,19.8206,10.2734,245,180,no,SOTA A: SphereTTC plug-in (publication params)
+12,spheredyn_v9,SphereDyn-v9 (seed 44),raw,latest,0.380874,0.617237,,,,,no,SphereDyn backbone
+13,fno,fno,sphere_ttc,latest,0.440323,0.451486,0.5465,1.2944,215,200,no,SOTA A: SphereTTC plug-in (publication params)
+14,fno,fno,raw,latest,0.442742,0.442450,,,,,no,
+15,vit,vit,sphere_ttc,latest,0.446486,0.436550,0.2684,0.6446,186,193,no,SOTA A: SphereTTC plug-in (publication params)
+16,vit,vit,raw,latest,0.447688,0.432141,,,,,no,
+17,fourcastnetv2,fourcastnetv2,raw,latest,0.450009,0.688207,,,,,no,
+18,transformer,transformer,sphere_ttc,latest,0.458936,0.398785,1.0507,1.5861,207,213,no,SOTA A: SphereTTC plug-in (publication params)
+19,cirt,cirt,sphere_ttc,latest,0.460089,0.419387,0.0979,0.3236,143,153,no,SOTA A: SphereTTC plug-in (publication params)
+20,cirt,cirt,raw,latest,0.460540,0.415620,,,,,no,
+21,transformer,transformer,raw,latest,0.463809,0.388086,,,,,no,
+22,convlstm,convlstm,sphere_ttc,latest,0.465347,0.372161,0.9574,1.7234,237,224,no,SOTA A: SphereTTC plug-in (publication params)
+23,convlstm,convlstm,raw,latest,0.469846,0.360009,,,,,no,
+24,climode,ClimODE-style adapter,sphere_ttc,latest,0.473398,0.375879,1.3443,1.6989,223,209,no,SOTA A: SphereTTC plug-in (publication params)
+25,climode,ClimODE-style adapter,raw,latest,0.479848,0.367864,,,,,no,

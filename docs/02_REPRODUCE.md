@@ -1,54 +1,55 @@
-# 02 · 复现指南
+# 02 · SphereTTC 复现指南
 
-复现分 5 个层级。本仓库自带的内容可以完成 L0–L1；L2 及以上需要原服务器上的数据、缓存和 checkpoint（本包为了轻量没有携带）。
+当前代码库只包含单 backbone SphereTTC 的 11 模型实验。复现分为冻结记录校验、合成测试、真实缓存重放和预报再生成；通过前两项不代表已经完成真实数据复现，也不解决日均 memory 的 R1 问题。
 
-| 层级 | 做什么 | 需要什么 | 本仓库能否独立完成 |
+| 层级 | 内容 | 所需资产 | 本仓库独立完成 |
 |---|---|---|---|
-| L0 | 从冻结 CSV 逐字节重建全部表格与两个 SOTA 的汇总，核对哈希和代码溯源 | Python + numpy | **能** |
-| L1 | 单元测试（合成数据） | `requirements.txt`（CPU 即可） | **能** |
-| L2 | 用冻结的预报缓存重跑 SphereTTC（SOTA A；以 GraphCast `l64_s08` 的 2017 / 2018–2019 / 2020 为例） | GPU、预报缓存、S2S truth、climatology | 需要外部资产 |
-| L3 | 用官方 checkpoint 重新生成 GraphCast 2019/2020 预报 | JAX GPU 环境、GraphCast 源码与 checkpoint、ERA5 | 需要外部资产 |
-| L4 | SOTA A 的其余 10 个 backbone | 11 个模型的缓存 | 需要外部资产 |
-| L5 | SOTA B：SphereDyn + SphereTTC-v22 | 4 张 GPU、S2S 数据、5 个参考模型缓存 | 需要外部资产 |
+| L0 | 重建 11 backbone / 22 配置 / 5,390 行的表格与摘要，校验清单与保留源码等价性 | Python + numpy | 能 |
+| L1 | 单元测试、合成端到端运行、SphereTTC 等价性检查 | `requirements.txt`，CPU 即可 | 能；外部数据测试可跳过 |
+| L2 | 从冻结缓存重跑 SphereTTC 与 Raw 对照 | GPU、forecast cache、S2S truth、ACC climatology | 需外部资产 |
+| L3 | 用官方 checkpoint 再生成 GraphCast 预报 | 匹配的 JAX/CUDA 环境、官方源码和 checkpoint、ERA5 | 需外部资产 |
+| L4 | 对其余 10 个 backbone 重放统一实验 | 对应缓存 / checkpoint、truth、冻结参数 | 需外部资产 |
 
-## L0 只读验证（推荐先跑）
+## L0 · 只读验证
 
 ```bash
-python -m pip install -r env/requirements-verify.txt     # 只有 numpy
+python -m pip install -r env/requirements-verify.txt
 PYTHONDONTWRITEBYTECODE=1 python verify_migration.py
 ```
 
-成功时输出以 `SPHERETTC_REPRODUCIBLE` 开头。它不训练、不推理、不写文件，会检查：
+验证器用于检查保留文件的完整性、从冻结 CSV 重建表格、重算 SphereTTC 汇总、核对 GraphCast 记录及保留的源码等价性证据。publication 表与最新表均为 5,390 行；最新表替换了 GraphCast 的 245 个 calibrated 单元。`scripts/tables/build_latest_results.py` 从 publication aggregate CSV 和冻结 GraphCast extract 重建最新表格，不依赖逐 initialization NPZ；`results/` 由 `tools/build_results_summary.py` 生成。历史 integrity / AUDIT 记录位于 `artifacts/provenance/graphcast_spherettc_20260804/`，不作为当前可执行验证工具。
 
-1. `MANIFEST.sha256` 中每个文件的 SHA-256；
-2. 仓库里没有原始数据或缓存，只有两份允许携带的权重（大小与哈希固定）；
-3. 由 5,390 行 baseline CSV + 490 行 SphereDyn CSV 逐字节重建原版 49 张表；由最新 5,880 行 CSV 逐字节重建更新后的 49 张表；新旧之间只有 245 个 GraphCast + SphereTTC 单元变化；
-4. 由逐单元 CSV 重算 GraphCast 各实验的汇总，并与冻结 JSON 对照；
-5. `results/` 下的全部摘要可以由 `tools/build_results_summary.py` 逐字节再生成，并且仍满足两个 SOTA 的关键结论（SphereTTC 11/11 个 backbone 改善；SphereDyn + SphereTTC 增益 25.28%、245/245 单元改善、macro ACC 全表第一）；
-6. 代码溯源：按整理日志反推每个文件，与 2026-08-06 清单和 2026-08-04 运行时源码哈希比对；两个 SOTA 的 13 个关键源文件必须与运行时版本一致（见 `03_CODE_MAP.md` §4）。
+SHA-256、源码等价性和摘要一致性不能证明 R1 已修复、测试集从未参与开发、原始数据正确或真实预测已重新运行。完整实验仍需 L2 及以上。
 
-## L1 单元测试
+## L1 · 安装与单元测试
+
+推荐 Python 3.11，与冻结运行记录的主要环境一致：
 
 ```bash
+python3.11 -m venv .venv
+source .venv/bin/activate
+python -m pip install --upgrade pip
 python -m pip install -r requirements.txt
 pytest -q
+python scripts/run_ttc.py --help
 ```
 
-2026-10-02 整理后的实测环境：Python 3.13、torch 2.14（CPU）、torch-harmonics 0.8.0、xarray 2024.10.0、zarr 2.18.7、numpy 2.2.6、pandas 2.x，结果为 26 passed、1 skipped（依赖原始 S2S 数据的 loader 测试自动 skip）。同一环境下还确认了 `scripts/run_ttc.py --help` 可用、`src/` 与 `scripts/` 下全部 52 个模块可以导入、两个 4-GPU shell 脚本语法正确。注意 xarray 2025 以后的版本配 zarr 2 会在 `test_run_ttc_daily_acc` 报错，请按 `requirements.txt` 固定版本。
+`requirements.txt` 采用 xarray 2024.10.0 / zarr 2.18.7 的组合，避免历史测试中较新 xarray 与 zarr 2 的兼容性问题。`torch_harmonics` 是核心依赖；原运行版本未记录，历史单元测试在 0.8.0 下通过。实际通过 / 跳过数量以当前运行输出为准，不沿用整理前测试数量。
 
-## L2 用冻结缓存重跑 SphereTTC（以 GraphCast `l64_s08` 为例）
+## L2 · 从缓存重跑 SphereTTC
 
-需要从原服务器取回（原仓库根：`/mnt/bn/czl-no-conda/mlx/users/ziyuzhou/SOON`；清理归档：`/mnt/bn/czl-no-conda/mlx/users/ziyuzhou/SOON_CLEANUP_ARCHIVE_20260803`）：
+原服务器根目录为 `/mnt/bn/czl-no-conda/mlx/users/ziyuzhou/SOON`。以下资产没有随轻量仓库提供，需从有权限的原服务器获取：
 
 | 资产 | 原相对路径 |
 |---|---|
-| GraphCast 2017–2019 日均预报缓存 | `artifacts/ttc_publication_corrected_20260726/official_daily_mean/cache/graphcast/forecast_cache_{2017,2018,2019}_121x240.zarr` |
-| 2019 warmup / 2020 预报缓存 | `artifacts/graphcast_spherettc_20260804/schedule/cache/graphcast_{2019,2020}_current_a100.zarr`（迁移前位于 sibling 目录 `SOON_graphcast_schedule_20260804/cache/`） |
-| 1979–2020-01-10 S2S truth（1.5°，UTC 日均） | `data/S2S/` |
+| GraphCast 2017–2019 日均预报 | `artifacts/ttc_publication_corrected_20260726/official_daily_mean/cache/graphcast/forecast_cache_{2017,2018,2019}_121x240.zarr` |
+| 2019 warmup / 2020 预报 | `artifacts/graphcast_spherettc_20260804/schedule/cache/graphcast_{2019,2020}_current_a100.zarr`；迁移前为 sibling 目录 `SOON_graphcast_schedule_20260804/cache/` |
+| 1979–2020-01-10 S2S truth | `data/S2S/` |
 | 2020–2021-01-10 truth | `artifacts/graphcast_spherettc_20260804/schedule/data/S2S/` |
 | ACC climatology | `artifacts/ttc_publication_corrected_20260726/climatology/DAILY_DOY_1979_2016_COMMON49.npz` |
+| normalization statistics（已保留） | `artifacts/shared/s2s_daily_54var_stats.json` |
 
-单年命令（与 `schedule/logs/retrospective_l64_s08_2018.log` 中的原始命令等价，路径改为相对路径；输出写到新建的 `runs/`，不覆盖冻结结果）：
+下面重放 2018 GraphCast `l64_s08`，输出到新的 `runs/`，不覆盖冻结指标。truth 和 climatology 须预先放到相应位置。此命令保留历史协议；不能通过重放本身修复 R1。
 
 ```bash
 mkdir -p runs
@@ -57,50 +58,39 @@ CUDA_VISIBLE_DEVICES=0 PYTHONDONTWRITEBYTECODE=1 python scripts/run_ttc.py \
   --cache artifacts/ttc_publication_corrected_20260726/official_daily_mean/cache/graphcast/forecast_cache_2018_121x240.zarr \
   --truth-root data/S2S --truth-workers 4 \
   --acc-climatology artifacts/ttc_publication_corrected_20260726/climatology/DAILY_DOY_1979_2016_COMMON49.npz \
-  --no-cache-output --metrics-output runs/l64_s08_2018.npz --profile-output runs/l64_s08_2018.json \
   --method sphere_ttc \
   --params-json artifacts/graphcast_spherettc_20260804/schedule/configs/generated/l64_s08.json \
   --warmup-cache artifacts/ttc_publication_corrected_20260726/official_daily_mean/cache/graphcast/forecast_cache_2017_121x240.zarr \
-  --trim-warmup-cache --warmup-truth-root data/S2S
+  --trim-warmup-cache --warmup-truth-root data/S2S \
+  --no-cache-output --metrics-output runs/l64_s08_2018.npz \
+  --profile-output runs/l64_s08_2018.json
 ```
 
-Raw 对照把 `--method sphere_ttc` 及其后的参数换成 `--method raw`。2019 用 2018 缓存做 warmup。A100 上一年约 2 分钟，峰值显存约 2.1 GB。
+Raw 对照改为 `--method raw`，去掉 `--params-json` 与 warmup 参数，并使用不同输出文件名。2019 使用 2018 缓存 warmup。冻结 profile 中，一年 SphereTTC 在 A100 上约 2 分钟，峰值显存约 2.1 GB；真实耗时取决于 I/O 和硬件。
 
-整套流程也可以直接用归档里的工具（`search_schedule.py` → `freeze_primary.py` → `run_retrospective_primary.py` → `run_prospective_holdout.py` → `bootstrap_prospective.py` → `finalize_report.py`）。**注意：这些工具会把输出写回 `artifacts/graphcast_spherettc_20260804/` 并覆盖冻结文件**，而且 `run_retrospective_primary.py` 写死了 `CUDA_VISIBLE_DEVICES=1`。请先复制整个仓库到工作副本再运行。
+GraphCast 完整工具链位于 `artifacts/graphcast_spherettc_20260804/schedule/tools/`：`search_schedule.py` → `freeze_primary.py` → `run_retrospective_primary.py` → `run_prospective_holdout.py` → `bootstrap_prospective.py` → `finalize_report.py`。
 
-> 修复 R1（`04_AUDIT_AND_RISKS.md`）之后，需要用这一层重跑 2017 选择、2018–2019 和 2020。
+**工具会向 `artifacts/graphcast_spherettc_20260804/` 写回并可能覆盖冻结证据。** 先制作实验工作副本并检查工具中的路径 / GPU 配置；`run_retrospective_primary.py` 历史上固定 `CUDA_VISIBLE_DEVICES=1`。新实验应保留独立输出目录与新清单，不把新结果冒充原冻结记录。
 
-## L3 重新生成 GraphCast 预报
+修复 R1 后，重新执行 2017 选参、2018–2019 测试和 GraphCast 2020 评估，并记录 truth availability 的定义及业务观测延迟。五个官方模型均受影响；六个本地日均输入模型也须明确预报发布时刻。
+
+## L3 · 重新生成 GraphCast 预报
 
 ```bash
-# 先安装与 CUDA 驱动匹配的 jaxlib，再：
-python -m pip install -r env/requirements-gpu-graphcast.txt   # 需要 external/graphcast_official/
+# 先安装与 CUDA 驱动匹配的 jaxlib，再安装官方模型环境。
+python -m pip install -r env/requirements-gpu-graphcast.txt
 python artifacts/graphcast_spherettc_20260804/schedule/tools/run_graphcast_holdout.py
-python artifacts/graphcast_spherettc_20260804/schedule/tools/prepare_truth_holdout.py   # 需要访问 gs://weatherbench2
+python artifacts/graphcast_spherettc_20260804/schedule/tools/prepare_truth_holdout.py
 ```
 
-checkpoint：`external/official_checkpoints/graphcast/GraphCast_small_1p0deg.npz`（SHA-256 `e9438d8ad31ca6e1d3397a33b2508f4bbb6ec16aed84629f9a64712bf756bc29`）及其 `stats/`。
+需要 `external/graphcast_official/`、可访问的 ERA5/WeatherBench2 数据，以及 `external/official_checkpoints/graphcast/GraphCast_small_1p0deg.npz` 和相应 `stats/`。冻结 checkpoint 的 SHA-256 为 `e9438d8ad31ca6e1d3397a33b2508f4bbb6ec16aed84629f9a64712bf756bc29`。准备 truth 的脚本需要访问 `gs://weatherbench2`。这些工具同样应在实验工作副本中运行。
 
-## L4 SOTA A 的其余 10 个 backbone
+## L4 · 其余 10 个 backbone
 
-冻结参数：`artifacts/ttc_publication_corrected_20260726/FROZEN_PARAMETERS.json`（每个模型一份，也拆在 `params/*.json`）。用 `scripts/run_ttc.py --method sphere_ttc --params-json params/<model>.json` 逐模型运行，再用 `scripts/tables/summarize_publication_main_table.py` 汇总。本地 6 个 baseline 的缓存与 checkpoint 在原服务器上。
+使用 `scripts/run_ttc.py --method sphere_ttc --params-json artifacts/ttc_publication_corrected_20260726/params/<model>.json`，替换 `--model`、预测缓存与 warmup。模型列表见 `configs/unified_11model_ttc.yaml`；变量、年份、时效与网格见 `configs/unified_11model_protocol.yaml`。用 `scripts/tables/summarize_publication_main_table.py` 汇总逐 initialization 指标。
 
-## L5 SOTA B：SphereDyn + SphereTTC-v22
+六个本地 backbone 的缓存与 checkpoint、其他官方模型缓存仍在原服务器。这里保留了模型实现 / adapter，但没有承诺所有 backbone 都能仅用本仓库从头训练和生成预测。补对照实验时，`static_bias`、`ema_bias`、`affine_ttc` 等须与 SphereTTC 使用相同的可用真值、warmup、选参年份和指标协议。
 
-```bash
-bash scripts/spheredyn/run_main_prediction_v2_4gpu.sh        # 4 张 GPU：推理 2017/2019 + 拟合 v22 + 门槛判定
-bash scripts/spheredyn/compute_spheredyn_main_rmse_acc_4gpu.sh  # RMSE/ACC 指标与 490 行表
-```
+## 冻结运行环境
 
-两个脚本写死了 `/usr/bin/python`，并且需要 `data/S2S`、5 个参考模型的 2017–2019 缓存，以及筛选阶段留下的 2018 SphereDyn 缓存。checkpoint 与拟合权重在本包内：
-
-- `artifacts/spheredyn_spherettc_open_goal_20260801/spheredyn_v9_h100_paired_screen/spheredyn_v9_multiscale_seed44/checkpoints/spheredyn_v9_multiscale.pt`（16,302,127 字节）
-- `artifacts/spheredyn_spherettc_open_goal_20260801/main_prediction_v2_seed44/final/FITTED_WEIGHTS_2017.npz`（35,588,308 字节）
-
-## 原服务器全量归档的验证器
-
-`archive/full_archive_verifiers/` 里的三个脚本（`verify_main_results_reproducibility.py`、`verify_latest_results_reproducibility.py`、`build_latest_reproducibility_manifest.py`）需要约 14 GB 的逐 initialization 指标和缓存，在本包里无法运行。它们保持原样，要用时请复制回原服务器归档的 `scripts/` 目录。
-
-## 已验证的运行环境（2026-08-04）
-
-见 `artifacts/graphcast_spherettc_20260804/ENVIRONMENT_20260804.txt`：Python 3.11，2 × A100-SXM4-80GB，torch 2.7.1，jax/jaxlib 0.4.28，xarray 2024.10.0，zarr 2.18.7，numpy 1.26.4。publication 11 模型结果是在 V100-SXM2-32GB 上跑的。
+`artifacts/graphcast_spherettc_20260804/ENVIRONMENT_20260804.txt` 记录：Python 3.11、2 × A100-SXM4-80GB、torch 2.7.1、jax/jaxlib 0.4.28、xarray 2024.10.0、zarr 2.18.7、numpy 1.26.4。publication 11 模型实验使用 V100-SXM2-32GB。GraphCast 2018–2019 缓存和 2020 缓存来自不同 GPU 代际，复现报告应保留这一差异。

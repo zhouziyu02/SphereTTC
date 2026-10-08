@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import argparse
 import csv
+import io
 from pathlib import Path
 
 
@@ -20,7 +21,6 @@ MODEL_ORDER = (
     "fuxi",
     "pangu",
     "graphcast",
-    "spheredyn_v9",
 )
 MODEL_NAMES = {
     "convlstm": "ConvLSTM",
@@ -34,13 +34,9 @@ MODEL_NAMES = {
     "fuxi": "FuXi",
     "pangu": "Pangu",
     "graphcast": "GraphCast-small 1°",
-    "spheredyn_v9": "SphereDyn-v9 (seed 44)",
 }
 LEADS = (24, 72, 120, 168, 240)
-METHODS_BY_MODEL = {
-    **{model: ("raw", "sphere_ttc") for model in MODEL_ORDER[:-1]},
-    "spheredyn_v9": ("raw", "sphere_ttc_v22"),
-}
+METHODS_BY_MODEL = {model: ("raw", "sphere_ttc") for model in MODEL_ORDER}
 PREFIX_NAMES = {
     "z": "位势",
     "q": "比湿",
@@ -88,13 +84,15 @@ def _bold_if(value: str, condition: bool) -> str:
     return f"**{value}**" if condition else value
 
 
-def _load_rows(sources: list[Path]) -> tuple[list[str], dict[str, str], dict[tuple[str, str, str, int], tuple[float, float]]]:
+def _load_rows(sources: list[Path], *, csv_text: str | None = None) -> tuple[list[str], dict[str, str], dict[tuple[str, str, str, int], tuple[float, float]]]:
     variables: list[str] = []
     units: dict[str, str] = {}
     values: dict[tuple[str, str, str, int], tuple[float, float]] = {}
     row_count = 0
+    if csv_text is not None and len(sources) != 1:
+        raise ValueError("in-memory CSV requires exactly one source name")
     for source in sources:
-        with source.open(newline="", encoding="utf-8") as stream:
+        with (io.StringIO(csv_text) if csv_text is not None else source.open(newline="", encoding="utf-8")) as stream:
             for row in csv.DictReader(stream):
                 row_count += 1
                 if row["period"] != "2018-2019":
@@ -145,23 +143,29 @@ def _render(
     values: dict[tuple[str, str, str, int], tuple[float, float]],
 ) -> str:
     lines = [
-        "# 统一 11-Baseline、SphereDyn + SphereTTC：49 变量完整主实验表",
+        "# SphereTTC：11 个 Backbone 的 49 变量完整主实验表",
         "",
-        "> 数据状态：冻结历史主实验结果  ",
-        "> 评估时期：2018-01-01 至 2019-12-31  ",
-        "> Initialization：730  ",
-        "> 模型：原 11 个 baseline + SphereDyn-v9 seed 44  ",
-        "> 方法：Raw、publication SphereTTC、SphereTTC-v22  ",
-        "> 变量：49  ",
+        "> 数据状态：冻结历史主实验结果",
+        ">",
+        "> 评估时期：2018-01-01 至 2019-12-31",
+        ">",
+        "> Initialization：730",
+        ">",
+        "> 模型：11 个冻结 forecasting backbone",
+        ">",
+        "> 方法：Raw、SphereTTC",
+        ">",
+        "> 变量：49",
+        ">",
         "> 时效：24、72、120、168、240h",
         "",
         "## 阅读说明",
         "",
-        "本文档联合冻结的原 11-baseline 主结果与 SphereDyn-v9 seed 44 主结果生成，共覆盖 `5,390 + 490 = 5,880` 条模型—方法—变量—时效结果。每个变量单独成表，避免对不同物理单位的 RMSE 做无意义的直接混合。",
+        "本文档由冻结的 11-backbone SphereTTC 主结果生成，共覆盖 `5,390` 条模型—方法—变量—时效结果。每个变量单独成表，避免对不同物理单位的 RMSE 做无意义的直接混合。",
         "",
-        "每张表有 24 行：原 11 个 baseline 各有 Raw 与 `+ publication SphereTTC` 两行，表末另有 `SphereDyn-v9` 与 `SphereDyn-v9 + SphereTTC-v22` 两行。RMSE 越低越好，ACC 越高越好。SphereTTC 行中相对同模型 Raw 改善的数值使用粗体；未加粗不代表缺失，而是该指标在该时效没有改善。",
+        "每张表有 22 行：11 个 backbone 各有 Raw 与 `+ SphereTTC` 两行。RMSE 越低越好，ACC 越高越好。SphereTTC 行中相对同模型 Raw 改善的数值使用粗体；未加粗不代表缺失，而是该指标在该时效没有改善。",
         "",
-        "RMSE 是余弦纬度加权、在 730 个 initialization 上汇总后的物理量误差；ACC 使用仅由 1979–2016 fit split 构建的逐月日 climatology。publication SphereTTC 参数只在 2017 上选择；SphereTTC-v22 的 reference-anchor 权重也只使用 2017 拟合，二者均冻结后评估 2018–2019。",
+        "RMSE 是余弦纬度加权、在 730 个 initialization 上汇总后的物理量误差；ACC 使用仅由 1979–2016 fit split 构建的逐月日 climatology。SphereTTC 参数只在 2017 上选择，冻结后评估 2018–2019。",
         "",
         "生成源：" + "、".join(f"`{source.as_posix()}`" for source in sources),
         "",
@@ -227,11 +231,7 @@ def _render(
                 )
             name = MODEL_NAMES[model]
             lines.append("| " + " | ".join([name, *raw_cells]) + " |")
-            ttc_name = (
-                f"{name} + SphereTTC-v22"
-                if model == "spheredyn_v9"
-                else f"{name} + SphereTTC"
-            )
+            ttc_name = f"{name} + SphereTTC"
             lines.append(
                 "| " + " | ".join([ttc_name, *ttc_cells]) + " |"
             )
@@ -252,24 +252,13 @@ def main() -> None:
         "--output",
         type=Path,
         default=repository
-        / "artifacts/spheredyn_spherettc_open_goal_20260801/MAIN_RESULTS_49_VARIABLES_ZH.md",
-    )
-    parser.add_argument(
-        "--spheredyn-source",
-        type=Path,
-        default=repository
-        / (
-            "artifacts/spheredyn_spherettc_open_goal_20260801/"
-            "main_prediction_v2_seed44/paper_metrics/"
-            "SPHEREDYN_MAIN_RESULTS_RMSE_ACC.csv"
-        ),
+        / "artifacts/ttc_publication_corrected_20260726/results/MAIN_RESULTS_49_VARIABLES_ZH.md",
     )
     args = parser.parse_args()
 
     source = args.source.resolve()
-    spheredyn_source = args.spheredyn_source.resolve()
     output = args.output.resolve()
-    sources = [source, spheredyn_source]
+    sources = [source]
     variables, units, values = _load_rows(sources)
     sources_for_report = [
         current.relative_to(repository)

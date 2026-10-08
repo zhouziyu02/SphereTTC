@@ -1,19 +1,7 @@
-# GraphCast + SphereTTC 后续实验归档
+# GraphCast + SphereTTC 冻结实验
 
-本目录完整归并两个原 sibling 实验：
+这里保留 GraphCast 的 SphereTTC 参数更新和评估证据。`schedule/` 的 56 个候选仅使用 2017 搜索段与时间后置 holdout，冻结全局 `l64_s08` 后评估 2018–2019 和独立的 2020 年。`parameter_only/` 保留早期负结果。
 
-- `parameter_only/`：保守参数搜索，最终未达到预注册门槛，保留为负结果和参数选择证据。
-- `schedule/`：56 个全局候选、family/lead schedule、2018–2019 冻结后回看与独立 2020 prospective 实验；推荐全局 `l64_s08`。
+最新 `LATEST_RESULTS.csv` 只含 11-backbone SphereTTC 的 5,390 行。相对 publication 结果仅替换 GraphCast + SphereTTC 的 245 个单元，所有 Raw 和其他 backbone 指标原样保留。`LATEST_RESULTS_49_VARIABLES_ZH.md` 包含 49 张表，每张 22 行。
 
-归并时保留了所有配置、逐 initialization 指标、逐单元 CSV、日志、profile、完整 2019 warmup、2020 GraphCast 缓存和专用 truth。工具已从 sibling 固定路径改为向上自动发现 `SOON` 根目录；历史日志、profile 和旧 `AUDIT.json` 中的绝对路径只作为 provenance 保留。
-
-权威入口：
-
-- `LATEST_EXPERIMENT_SUMMARY_ZH.md`
-- `LATEST_RESULTS_49_VARIABLES_ZH.md`
-- `LATEST_RESULTS.csv`
-- `COMPARISON_WITH_FROZEN_49_TABLES.json`
-- `schedule/MAIN_EXPERIMENT_RECOMMENDATION.md`
-- `LATEST_REPRODUCIBILITY_MANIFEST.json`
-
-从仓库根目录运行 `python scripts/verify_latest_results_reproducibility.py` 做只读统计复现；追加 `--full-integrity` 会校验整个归并目录的树哈希。
+保留的配置、报告、逐单元 CSV、日志和 profiles 是冻结证据。预测缓存、逐 initialization 指标、truth 和官方 checkpoint 不包含在轻量仓库中；历史 GPU 工具需要外部资产才能运行。完整性快照已移入 `../provenance/graphcast_spherettc_20260804/`，原服务器绝对路径仅供历史追溯。当前验证与重建入口见 `REPRODUCIBILITY.md`。

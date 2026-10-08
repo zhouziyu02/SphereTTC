@@ -1,9 +1,8 @@
 """Baseline backbones trained under our protocol and the model factory.
 
 ConvLSTM, FNO, grid Transformer and ViT live here; CirT and the ClimODE-style
-adapter live in external_models.py.  The proposed SphereDyn model lives in
-src/spheredyn.py (the pre-2026-10-03 version of this file, which also held the
-SphereDyn building blocks, is archived in archive/pre_consolidation_20261003/).
+adapter live in external_models.py.  These backbones provide the locally trained
+forecasts used by the SphereTTC evaluation protocol.
 """
 
 from __future__ import annotations
@@ -198,27 +197,6 @@ def build_model(name: str, in_channels: int, out_vars: int, n_leads: int) -> nn.
         return GridTransformerForecast(in_channels, out_vars, n_leads)
     if name == "vit":
         return ViTForecast(in_channels, out_vars, n_leads)
-    if name in {
-        "spheredyn_v9_multiscale",
-        "spheredyn_v9_multiscale_null_control",
-    }:
-        from ..spheredyn import SphereDyn
-
-        return SphereDyn(
-            in_channels,
-            out_vars,
-            n_leads,
-            observation_width=192,
-            observation_layers=6,
-            observation_rank=80,
-            observation_lmax=80,
-            observation_bands=10,
-            multiscale_mode=(
-                "learned"
-                if name == "spheredyn_v9_multiscale"
-                else "null_control"
-            ),
-        )
     if name == "cirt":
         from .external_models import CirTForecast
 

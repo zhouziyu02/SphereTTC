@@ -43,12 +43,12 @@ criterion rather than silently folded into the RMSE result.
 From this directory, with GPU access:
 
 ```bash
-PYTHONDONTWRITEBYTECODE=1 python tools/integrity.py before
 PYTHONDONTWRITEBYTECODE=1 python tools/run_experiment.py validation
 PYTHONDONTWRITEBYTECODE=1 python tools/run_experiment.py test
-PYTHONDONTWRITEBYTECODE=1 python tools/integrity.py after
 ```
 
 `tools/run_experiment.py all` runs validation and test in sequence. It uses
 both visible GPUs, writes one log and one device profile per task, and never
 passes an output path inside `../SOON`.
+
+Current lightweight-package note: these are historical experiment commands and require external per-initialization metrics, forecasts, and truth. Use the repository root `verify_migration.py` for portable read-only verification. Original integrity evidence is under `../../provenance/graphcast_spherettc_20260804/parameter_only/`.

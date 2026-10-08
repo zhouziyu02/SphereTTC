@@ -28,15 +28,5 @@ external/
 !artifacts/ttc_publication_corrected_20260726/results/
 !artifacts/ttc_publication_corrected_20260726/results/**
 
-# The final migration intentionally carries exactly these two verified weights.
-!artifacts/spheredyn_spherettc_open_goal_20260801/
-!artifacts/spheredyn_spherettc_open_goal_20260801/main_prediction_v2_seed44/
-!artifacts/spheredyn_spherettc_open_goal_20260801/main_prediction_v2_seed44/final/
-!artifacts/spheredyn_spherettc_open_goal_20260801/main_prediction_v2_seed44/final/FITTED_WEIGHTS_2017.npz
-!artifacts/spheredyn_spherettc_open_goal_20260801/spheredyn_v9_h100_paired_screen/
-!artifacts/spheredyn_spherettc_open_goal_20260801/spheredyn_v9_h100_paired_screen/spheredyn_v9_multiscale_seed44/
-!artifacts/spheredyn_spherettc_open_goal_20260801/spheredyn_v9_h100_paired_screen/spheredyn_v9_multiscale_seed44/checkpoints/
-!artifacts/spheredyn_spherettc_open_goal_20260801/spheredyn_v9_h100_paired_screen/spheredyn_v9_multiscale_seed44/checkpoints/spheredyn_v9_multiscale.pt
-
 # Local re-runs suggested in docs/02_REPRODUCE.md
 runs/

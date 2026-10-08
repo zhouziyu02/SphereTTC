@@ -31,7 +31,7 @@ isolated directory. Algorithm source and frozen caches remain in `../SOON`.
   frozen raw metric arrays for every coordinate, MSE, MAE, bias, and ACC
   covariance component.
 - The before/after source hashes and GraphCast-cache metadata fingerprint are
-  identical (`integrity/comparison.json`).
+  identical (`../../provenance/graphcast_spherettc_20260804/parameter_only/integrity/comparison.json`).
 - The original repository's deterministic verifier still reports
   `MAIN_RESULTS_REPRODUCIBLE`, including byte-identical reconstruction of its
   frozen main table.

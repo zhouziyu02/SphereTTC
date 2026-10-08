@@ -1,15 +1,17 @@
 # GraphCast + SphereTTC parameter-schedule exploration
 
-This experiment was originally executed in the isolated sibling
-`SOON_graphcast_schedule_20260804` and is now archived inside the portable SOON
-repository. Its tools automatically discover the enclosing SOON root; all
-experiment caches, truth shards, metrics, logs, profiles, and reports remain
-under this directory. Historical absolute paths are provenance only.
+This directory contains frozen GraphCast/SphereTTC experiment evidence. Aggregate
+CSVs, configurations, reports, logs, and profiles are retained. Forecast caches,
+truth shards, per-initialization tensors, and checkpoints are external assets and
+are not included. Historical tools require those assets to rerun; the root
+`verify_migration.py` verifies the portable aggregate results without them.
+The original whole-repository integrity records and `AUDIT.json` are read-only
+provenance under `../../provenance/graphcast_spherettc_20260804/schedule/`.
 
 ## Scientific protocol
 
 - The SphereTTC implementation is not changed. Every run calls the existing
-  `../SOON/scripts/run_ttc.py --method sphere_ttc`; only existing command-line
+  `scripts/run_ttc.py --method sphere_ttc` from the repository root; only existing command-line
   hyperparameters vary.
 - Parameters may differ by forecast lead and by one of six pre-defined
   variable families: geopotential, humidity, temperature, zonal wind,

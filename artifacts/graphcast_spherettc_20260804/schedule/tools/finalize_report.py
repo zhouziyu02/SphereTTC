@@ -41,8 +41,9 @@ def main() -> None:
     truth = read("data/S2S/HOLDOUT_MANIFEST.json")
     graphcast_2019 = read("profiles/graphcast_2019_current_a100.json")
     graphcast_2020 = read("profiles/graphcast_2020_current_a100.json")
-    integrity = read("integrity/comparison.json")
-    verifier = (ROOT / "integrity/main_verifier.log").read_text().strip()
+    provenance = ROOT.parents[1] / "provenance/graphcast_spherettc_20260804/schedule"
+    integrity = json.loads((provenance / "integrity/comparison.json").read_text())
+    verifier = (provenance / "integrity/main_verifier.log").read_text().strip()
     p2020 = prospective["primary_global"]
     s2020 = prospective["secondary_family_lead_schedule"]
     recommend = bool(

@@ -11,8 +11,8 @@ available after its valid time t + tau (delayed supervision).  SphereTTC never
 updates the backbone; it post-processes y_hat_t(tau) using only forecast /
 verification pairs that are already verified at time t.
 
-Mode A -- spherical calibration of a single backbone        (paper Result A, 11 backbones)
-------------------------------------------------------------------------------------------
+Spherical calibration of a single backbone (11 backbones)
+--------------------------------------------------------
 For every lead tau and every variable v independently, at every initialization t:
 
   (1) Delayed-verification memory    M_t(tau): the last K = memory_size pairs
@@ -52,27 +52,6 @@ Frozen hyper-parameters (selected on 2017 only):
   * GraphCast: global setting ``l64_s08`` (lmax = mmax 64, strength 0.8, otherwise
     as above) -> artifacts/graphcast_spherettc_20260804/schedule/configs/generated/l64_s08.json
 
-Mode B -- multi-provider constrained combination            (paper Result B, SphereDyn)
-------------------------------------------------------------------------------------------
-"SphereTTC-v22".  When several forecast providers are available, the target backbone
-f_0 is combined with R released reference systems f_1..f_R per (lead, variable):
-
-    y_tilde = alpha * f_0 + (1 - alpha) * sum_r omega_r f_r + c - S(lat, lon)
-
-  * backbone anchor alpha in {0.5, 0.75} (or the raw no-op alpha = 1): the target
-    backbone always keeps at least half of the weight;
-  * reference weights omega (summing to 1) are one of: minimum-error-variance ridge
-    weights (9 ridge ratios), uniform weights, or a single reference (one-hot);
-  * c: global bias = -(mean combined error); S: spatial bias map, shrunk by a factor
-    in {0, .25, .5, .75, 1};
-  * the candidate (and the shrinkage) is chosen by error energy on a chronological
-    validation split of 2017 (last 121 days), then refit on all of 2017 and frozen;
-    there is no online update and no spherical-harmonic step in this mode.
-  In the frozen SphereDyn weights alpha = 0.5 in all 245 (lead, variable) cells and the
-  references are FourCastNetV2, OneForecast, FuXi, Pangu, GraphCast.
-  [Part 4: fit_constrained_combination / apply_constrained_combination; the 2017
-  statistics are accumulated by scripts/spheredyn/run_main_spherettc_v2.py::_fit]
-
 Not part of the final module
 ----------------------------
 The multi-timescale / seasonal calibration experts of the project proposal exist
@@ -87,12 +66,11 @@ t + 18 h; the planned fix is ``valid_time + 1 day <= t`` in this one function.
 
 Provenance
 ----------
-Parts 1, 2 and 4 are moved verbatim (identical code, docstrings extended) from
-src/ttc/memory.py, scripts/run_ttc.py::_eligible_from_buffer, src/ttc/sphere.py and
-scripts/spheredyn/evaluate_goal_reference_ensemble.py (originals archived in
-archive/pre_consolidation_20261003/); ``verify_migration.py`` checks the code is
-AST-identical.  Part 3 and the public wrappers of Part 4 are new and tested against
-the experiment code.
+Parts 1 and 2 are moved verbatim (identical code, docstrings extended) from
+src/ttc/memory.py, scripts/run_ttc.py::_eligible_from_buffer and src/ttc/sphere.py.
+The original memory and calibrator modules are archived in
+archive/pre_consolidation_20261003/; ``verify_migration.py`` checks their code is
+AST-identical.  Part 3 is tested against the experiment runner.
 """
 
 from __future__ import annotations
@@ -165,7 +143,7 @@ def assert_no_future_targets(current_init_time, selected_valid_times):
 
 
 # =============================================================================
-# Part 2 -- Mode A: spherical-harmonic affine calibrator, steps (2)-(7)
+# Part 2 -- spherical-harmonic affine calibrator, steps (2)-(7)
 # =============================================================================
 
 
@@ -355,7 +333,7 @@ class SphereTTCCalibrator:
 
 
 # =============================================================================
-# Part 3 -- Mode A as an online plug-in for any frozen backbone, steps (1)-(7)
+# Part 3 -- online plug-in for any frozen backbone, steps (1)-(7)
 # =============================================================================
 
 
@@ -453,343 +431,3 @@ class SphereTTC:
             )
             if len(buffer) > self.keep_size:
                 self.buffers[lead_index] = buffer[-self.keep_size :]
-
-
-# =============================================================================
-# Part 4 -- Mode B: multi-provider constrained combination ("SphereTTC-v22")
-# =============================================================================
-
-REFERENCES = (
-    "fourcastnetv2",
-    "oneforecast",
-    "fuxi",
-    "pangu",
-    "graphcast",
-)
-RIDGE_RATIOS = np.asarray(
-    [0.0, 1e-7, 1e-6, 1e-5, 1e-4, 1e-3, 1e-2, 1e-1, 1.0],
-    dtype=np.float64,
-)
-SPATIAL_SHRINKAGES = np.asarray([0.0, 0.25, 0.5, 0.75, 1.0])
-
-
-def _ridge_weights(covariance: np.ndarray, ratio: float) -> np.ndarray:
-    """Minimum-error-variance weights summing to one, with relative ridge ``ratio``."""
-    features = covariance.shape[0]
-    scale = max(float(np.trace(covariance)) / features, 1e-18)
-    matrix = 0.5 * (covariance + covariance.T)
-    matrix = matrix + (float(ratio) * scale + 1e-12 * scale) * np.eye(features)
-    ones = np.ones(features)
-    try:
-        direction = np.linalg.solve(matrix, ones)
-    except np.linalg.LinAlgError:
-        direction = np.linalg.pinv(matrix, rcond=1e-12) @ ones
-    denominator = float(ones @ direction)
-    if not np.isfinite(denominator) or abs(denominator) < 1e-12:
-        return np.full(features, 1.0 / features)
-    weights = direction / denominator
-    if not np.all(np.isfinite(weights)):
-        return np.full(features, 1.0 / features)
-    return weights
-
-
-def _energy(
-    second_moment: np.ndarray,
-    mean: np.ndarray,
-    weights: np.ndarray,
-    bias: float,
-) -> float:
-    """Mean squared combined error  E[(w.e + bias)^2]  from first and second moments."""
-    return float(
-        weights @ second_moment @ weights
-        + 2.0 * bias * (weights @ mean)
-        + bias * bias
-    )
-
-
-def _candidate_weights(
-    covariance: np.ndarray,
-    minimum_backbone_weight: float,
-) -> list[tuple[str, int, float, np.ndarray]]:
-    """Candidate combination weights; the target backbone is the last feature.
-
-    With ``minimum_backbone_weight > 0`` (SphereTTC-v22): anchor alpha in
-    {max(min, .5), max(min, .75)} on the backbone and (1 - alpha) times one of
-    {ridge weights x 9 ratios, uniform, one-hot per reference} on the references,
-    plus the raw no-op (alpha = 1).
-    """
-    features = covariance.shape[0]
-    if minimum_backbone_weight > 0:
-        reference_features = features - 1
-        reference_covariance = covariance[:-1, :-1]
-        reference_candidates: list[tuple[str, int, np.ndarray]] = [
-            ("anchor_ridge", index, _ridge_weights(reference_covariance, ratio))
-            for index, ratio in enumerate(RIDGE_RATIOS)
-        ]
-        reference_candidates.append(
-            ("anchor_uniform", -1, np.full(reference_features, 1.0 / reference_features))
-        )
-        for index in range(reference_features):
-            weights = np.zeros(reference_features)
-            weights[index] = 1.0
-            reference_candidates.append(("anchor_onehot", index, weights))
-        anchors = sorted(
-            {
-                float(minimum_backbone_weight),
-                max(float(minimum_backbone_weight), 0.5),
-                max(float(minimum_backbone_weight), 0.75),
-            }
-        )
-        candidates = []
-        for kind, index, reference_weights in reference_candidates:
-            for anchor in anchors:
-                if anchor >= 1.0:
-                    continue
-                weights = np.zeros(features)
-                weights[:-1] = (1.0 - anchor) * reference_weights
-                weights[-1] = anchor
-                candidates.append((kind, index, anchor, weights))
-        raw = np.zeros(features)
-        raw[-1] = 1.0
-        candidates.append(("raw_noop", -1, 1.0, raw))
-        return candidates
-    candidates = [
-        ("ridge", index, float("nan"), _ridge_weights(covariance, ratio))
-        for index, ratio in enumerate(RIDGE_RATIOS)
-    ]
-    candidates.append(
-        ("uniform", -1, float("nan"), np.full(features, 1.0 / features))
-    )
-    for index in range(features):
-        weights = np.zeros(features)
-        weights[index] = 1.0
-        candidates.append(("one_hot", index, float("nan"), weights))
-    return candidates
-
-
-def _feature_statistics(
-    statistics: dict[str, np.ndarray],
-    backbone_index: int,
-) -> tuple[np.ndarray, np.ndarray, float]:
-    """Assemble error cross-products/sums with the backbone as the last feature."""
-    reference_count = statistics["reference_sum"].shape[-1]
-    cross = np.zeros(
-        statistics["reference_cross"].shape[:2]
-        + (reference_count + 1, reference_count + 1),
-        dtype=np.float64,
-    )
-    cross[..., :reference_count, :reference_count] = statistics[
-        "reference_cross"
-    ]
-    cross[..., :reference_count, reference_count] = statistics[
-        "raw_reference_cross"
-    ][backbone_index]
-    cross[..., reference_count, :reference_count] = statistics[
-        "raw_reference_cross"
-    ][backbone_index]
-    cross[..., reference_count, reference_count] = statistics["raw_sse"][
-        backbone_index
-    ]
-    sums = np.concatenate(
-        [
-            statistics["reference_sum"],
-            statistics["raw_sum"][backbone_index, ..., None],
-        ],
-        axis=-1,
-    )
-    return cross, sums, float(statistics["count"])
-
-
-def _fit_backbone(
-    backbone_index: int,
-    train: dict[str, np.ndarray],
-    validation: dict[str, np.ndarray],
-    latitude: np.ndarray,
-    minimum_backbone_weight: float,
-) -> dict[str, np.ndarray]:
-    """Select (on validation) and refit (on train + validation) the combination weights."""
-    train_cross, train_sum, train_count = _feature_statistics(train, backbone_index)
-    val_cross, val_sum, val_count = _feature_statistics(validation, backbone_index)
-    full_cross = train_cross + val_cross
-    full_sum = train_sum + val_sum
-    full_count = train_count + val_count
-    leads, variables, features = train_sum.shape
-
-    selected_kind = np.empty((leads, variables), dtype="U16")
-    selected_index = np.zeros((leads, variables), dtype=np.int16)
-    selected_anchor = np.full((leads, variables), np.nan, dtype=np.float64)
-    train_weights = np.zeros((leads, variables, features), dtype=np.float64)
-    train_bias = np.zeros((leads, variables), dtype=np.float64)
-
-    for lead in range(leads):
-        for variable in range(variables):
-            train_second = train_cross[lead, variable] / train_count
-            train_mean = train_sum[lead, variable] / train_count
-            train_covariance = train_second - np.outer(train_mean, train_mean)
-            val_second = val_cross[lead, variable] / val_count
-            val_mean = val_sum[lead, variable] / val_count
-            best: tuple[float, str, int, float, np.ndarray, float] | None = None
-            for kind, index, anchor, weights in _candidate_weights(
-                train_covariance, minimum_backbone_weight
-            ):
-                bias = -float(weights @ train_mean)
-                score = _energy(val_second, val_mean, weights, bias)
-                candidate = (score, kind, index, anchor, weights, bias)
-                if best is None or candidate[0] < best[0]:
-                    best = candidate
-            assert best is not None
-            _, kind, index, anchor, weights, bias = best
-            selected_kind[lead, variable] = kind
-            selected_index[lead, variable] = index
-            selected_anchor[lead, variable] = anchor
-            train_weights[lead, variable] = weights
-            train_bias[lead, variable] = bias
-
-    reference_count = train["reference_map_sum"].shape[-1]
-    train_feature_map = np.concatenate(
-        [
-            train["reference_map_sum"],
-            train["raw_map_sum"][backbone_index, ..., None],
-        ],
-        axis=-1,
-    )
-    val_feature_map = np.concatenate(
-        [
-            validation["reference_map_sum"],
-            validation["raw_map_sum"][backbone_index, ..., None],
-        ],
-        axis=-1,
-    )
-    train_mean_map = (
-        np.einsum("lvxym,lvm->lvxy", train_feature_map, train_weights, optimize=True)
-        / float(train["days"])
-        + train_bias[..., None, None]
-    )
-    val_sum_map = (
-        np.einsum("lvxym,lvm->lvxy", val_feature_map, train_weights, optimize=True)
-        + float(validation["days"]) * train_bias[..., None, None]
-    )
-    spatial_shrink = np.zeros((leads, variables), dtype=np.float64)
-    latitude_map = latitude[None, None, :, None]
-    linear = np.sum(latitude_map * train_mean_map * val_sum_map, axis=(2, 3))
-    quadratic = float(validation["days"]) * np.sum(
-        latitude_map * train_mean_map * train_mean_map,
-        axis=(2, 3),
-    )
-    deltas = np.stack(
-        [
-            -2.0 * value * linear + value * value * quadratic
-            for value in SPATIAL_SHRINKAGES
-        ],
-        axis=0,
-    )
-    spatial_shrink = SPATIAL_SHRINKAGES[np.argmin(deltas, axis=0)]
-
-    final_weights = np.zeros_like(train_weights)
-    final_bias = np.zeros_like(train_bias)
-    for lead in range(leads):
-        for variable in range(variables):
-            full_second = full_cross[lead, variable] / full_count
-            full_mean = full_sum[lead, variable] / full_count
-            full_covariance = full_second - np.outer(full_mean, full_mean)
-            kind = str(selected_kind[lead, variable])
-            index = int(selected_index[lead, variable])
-            anchor = float(selected_anchor[lead, variable])
-            if kind == "anchor_ridge":
-                reference_weights = _ridge_weights(
-                    full_covariance[:-1, :-1], RIDGE_RATIOS[index]
-                )
-                weights = np.zeros(features)
-                weights[:-1] = (1.0 - anchor) * reference_weights
-                weights[-1] = anchor
-            elif kind == "anchor_onehot":
-                weights = np.zeros(features)
-                weights[index] = 1.0 - anchor
-                weights[-1] = anchor
-            elif kind == "anchor_uniform":
-                weights = np.zeros(features)
-                weights[:-1] = (1.0 - anchor) / (features - 1)
-                weights[-1] = anchor
-            elif kind == "raw_noop":
-                weights = np.zeros(features)
-                weights[-1] = 1.0
-            elif kind == "ridge":
-                weights = _ridge_weights(full_covariance, RIDGE_RATIOS[index])
-            elif kind == "one_hot":
-                weights = np.zeros(features)
-                weights[index] = 1.0
-            else:
-                weights = np.full(features, 1.0 / features)
-            final_weights[lead, variable] = weights
-            final_bias[lead, variable] = -float(weights @ full_mean)
-
-    full_feature_map = train_feature_map + val_feature_map
-    full_mean_map = (
-        np.einsum("lvxym,lvm->lvxy", full_feature_map, final_weights, optimize=True)
-        / float(train["days"] + validation["days"])
-        + final_bias[..., None, None]
-    )
-    spatial_bias = spatial_shrink[..., None, None] * full_mean_map
-    return {
-        "weights": final_weights,
-        "bias": final_bias,
-        "spatial_bias": spatial_bias,
-        "spatial_shrink": spatial_shrink,
-        "selected_kind": selected_kind,
-        "selected_index": selected_index,
-        "selected_anchor": selected_anchor,
-        "reference_count": np.asarray(reference_count),
-    }
-
-
-def fit_constrained_combination(
-    train_statistics: dict[str, np.ndarray],
-    validation_statistics: dict[str, np.ndarray],
-    latitude: np.ndarray,
-    minimum_backbone_weight: float = 0.5,
-    backbone_index: int = 0,
-) -> dict[str, np.ndarray]:
-    """Public entry point of Mode B fitting (same computation as ``_fit_backbone``).
-
-    The statistics dictionaries hold error moments of the R references and the
-    backbone over the training / validation days (see
-    scripts/spheredyn/run_main_spherettc_v2.py::_fit for how they are accumulated
-    from 2017 forecasts).  Returns ``weights`` (L, V, R + 1; backbone last),
-    ``bias`` (L, V), ``spatial_bias`` (L, V, H, W) and the selected candidates.
-    """
-    return _fit_backbone(
-        backbone_index,
-        train_statistics,
-        validation_statistics,
-        latitude,
-        minimum_backbone_weight,
-    )
-
-
-def apply_constrained_combination(
-    backbone: torch.Tensor | np.ndarray,
-    references: Sequence[torch.Tensor | np.ndarray],
-    fitted: dict[str, np.ndarray],
-    device: str | torch.device = "cpu",
-) -> torch.Tensor:
-    """Apply frozen Mode B weights: (B, L, V, H, W) backbone + R references -> calibrated.
-
-    Same arithmetic, in the same order and precision (float64), as the main
-    SphereDyn run in scripts/spheredyn/run_main_spherettc_v2.py.
-    ``references`` must follow the order of :data:`REFERENCES`.
-    """
-    device = torch.device(device)
-    weights = torch.as_tensor(fitted["weights"], dtype=torch.float64, device=device)
-    bias = torch.as_tensor(fitted["bias"], dtype=torch.float64, device=device)
-    spatial_bias = torch.as_tensor(fitted["spatial_bias"], dtype=torch.float64, device=device)
-    raw = torch.as_tensor(backbone, dtype=torch.float64, device=device)
-    corrected = (
-        bias[None, :, :, None, None]
-        - spatial_bias[None]
-        + raw * weights[None, :, :, -1, None, None]
-    )
-    for reference_index, prediction in enumerate(references):
-        corrected = corrected + torch.as_tensor(
-            prediction, dtype=torch.float64, device=device
-        ) * weights[None, :, :, reference_index, None, None]
-    return corrected

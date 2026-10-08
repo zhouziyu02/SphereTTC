@@ -14,8 +14,5 @@ measured end-to-end including truth loading and RMSE/ACC scoring.
 | GraphCast-small 1° inference per initialization (10-day rollout, incl. ERA5 loading), 2020 | 31.6 s | `graphcast_2020_current_a100.json` (11550 s / 366) |
 | SphereTTC overhead relative to GraphCast inference | 0.22% (end-to-end 1.14%) | ratio of the rows above |
 | Hyper-parameter selection cost per candidate per backbone (2017, 245 scored inits, V100) | 61–81 s | `FROZEN_PARAMETERS.json` |
-| SphereDyn-v9 parameters | 3,966,080 | `spheredyn_v9_h100_paired_screen/DESIGN.json` |
-| SphereDyn-v9 checkpoint size | 16,302,127 bytes | `spheredyn_v9_multiscale.pt` |
-| SphereDyn-v9 final training stage | 6000 samples × 8 epochs, batch 2, lr 5e-05, warm-started from v8 | `DESIGN.json` |
 
-Not available in this package: SphereDyn total training GPU-hours, MACs/FLOPs of any model, inference time of the other 10 backbones.
+Not available in this package: MACs/FLOPs of any model, inference time of the other 10 backbones.

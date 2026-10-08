@@ -13,7 +13,7 @@
     "primary_metric": "macro nRMSE: equal-weight mean of RMSE / 1979-2016 std over 49 variables x 5 leads",
     "parameter_selection": "2017 only, frozen before 2018-2019"
   },
-  "A_spherettc_final_version": {
+  "spherettc_final_version": {
     "code": "src/spherettc.py::SphereTTCCalibrator via scripts/run_ttc.py --method sphere_ttc",
     "backbones": 11,
     "backbones_improved_macro_nrmse": 11,
@@ -213,106 +213,6 @@
       }
     },
     "table": "results/SPHERETTC_11_BACKBONES.md"
-  },
-  "B_spheredyn_plus_spherettc": {
-    "backbone_checkpoint": "artifacts/spheredyn_spherettc_open_goal_20260801/spheredyn_v9_h100_paired_screen/spheredyn_v9_multiscale_seed44/checkpoints/spheredyn_v9_multiscale.pt",
-    "calibration_weights": "artifacts/spheredyn_spherettc_open_goal_20260801/main_prediction_v2_seed44/final/FITTED_WEIGHTS_2017.npz",
-    "code": "backbone src/spheredyn.py::SphereDyn; calibration src/spherettc.py Part 4 (Mode B), run by scripts/spheredyn/run_main_spherettc_v2.py; launcher scripts/spheredyn/run_main_prediction_v2_4gpu.sh",
-    "spherettc_mode": "SphereTTC-v22: multi-provider constrained combination (SphereDyn weight >= 0.5; references FourCastNetV2, OneForecast, FuXi, Pangu, GraphCast; fitted on 2017, frozen)",
-    "raw_macro_nrmse": 0.3808743034930633,
-    "spheredyn_plus_spherettc_macro_nrmse": 0.28457822236659047,
-    "gain_percent": 25.282903110901678,
-    "gate_status": "MAIN_PREDICTION_GOAL_ACHIEVED",
-    "raw_macro_acc": 0.617237,
-    "spheredyn_plus_spherettc_macro_acc": 0.808002,
-    "rmse_improved_cells": 245,
-    "rmse_worse_cells": 0,
-    "acc_improved_cells": 245,
-    "macro_nrmse_rank_among_24": 2,
-    "macro_acc_rank_among_24": 1,
-    "by_lead": [
-      {
-        "lead": "24h",
-        "spheredyn_raw_nrmse": 0.186959,
-        "spheredyn_spherettc_nrmse": 0.127366,
-        "gain_percent": 31.874979,
-        "spheredyn_raw_acc": 0.932018,
-        "spheredyn_spherettc_acc": 0.968308,
-        "best_local_baseline": "fno",
-        "best_local_raw_nrmse": 0.313236,
-        "best_raw_backbone": "pangu",
-        "best_raw_nrmse": 0.112747,
-        "graphcast_raw_nrmse": 0.113347,
-        "spheredyn_raw_rank_among_12_raw": 5,
-        "spheredyn_spherettc_nrmse_rank_among_24": 7,
-        "spheredyn_spherettc_acc_rank_among_24": 7
-      },
-      {
-        "lead": "72h",
-        "spheredyn_raw_nrmse": 0.359487,
-        "spheredyn_spherettc_nrmse": 0.227067,
-        "gain_percent": 36.835845,
-        "spheredyn_raw_acc": 0.724239,
-        "spheredyn_spherettc_acc": 0.905088,
-        "best_local_baseline": "fno",
-        "best_local_raw_nrmse": 0.426328,
-        "best_raw_backbone": "GraphCast-small 1°",
-        "best_raw_nrmse": 0.178825,
-        "graphcast_raw_nrmse": 0.178825,
-        "spheredyn_raw_rank_among_12_raw": 6,
-        "spheredyn_spherettc_nrmse_rank_among_24": 8,
-        "spheredyn_spherettc_acc_rank_among_24": 8
-      },
-      {
-        "lead": "120h",
-        "spheredyn_raw_nrmse": 0.422604,
-        "spheredyn_spherettc_nrmse": 0.292189,
-        "gain_percent": 30.859977,
-        "spheredyn_raw_acc": 0.582479,
-        "spheredyn_spherettc_acc": 0.837509,
-        "best_local_baseline": "fno",
-        "best_local_raw_nrmse": 0.472372,
-        "best_raw_backbone": "GraphCast-small 1°",
-        "best_raw_nrmse": 0.270588,
-        "graphcast_raw_nrmse": 0.270588,
-        "spheredyn_raw_rank_among_12_raw": 5,
-        "spheredyn_spherettc_nrmse_rank_among_24": 7,
-        "spheredyn_spherettc_acc_rank_among_24": 7
-      },
-      {
-        "lead": "168h",
-        "spheredyn_raw_nrmse": 0.455256,
-        "spheredyn_spherettc_nrmse": 0.353201,
-        "gain_percent": 22.417094,
-        "spheredyn_raw_acc": 0.478086,
-        "spheredyn_spherettc_acc": 0.745769,
-        "best_local_baseline": "cirt",
-        "best_local_raw_nrmse": 0.490845,
-        "best_raw_backbone": "GraphCast-small 1°",
-        "best_raw_nrmse": 0.37855,
-        "graphcast_raw_nrmse": 0.37855,
-        "spheredyn_raw_rank_among_12_raw": 5,
-        "spheredyn_spherettc_nrmse_rank_among_24": 1,
-        "spheredyn_spherettc_acc_rank_among_24": 1
-      },
-      {
-        "lead": "240h",
-        "spheredyn_raw_nrmse": 0.480066,
-        "spheredyn_spherettc_nrmse": 0.423069,
-        "gain_percent": 11.872671,
-        "spheredyn_raw_acc": 0.369364,
-        "spheredyn_spherettc_acc": 0.583336,
-        "best_local_baseline": "cirt",
-        "best_local_raw_nrmse": 0.500097,
-        "best_raw_backbone": "cirt",
-        "best_raw_nrmse": 0.500097,
-        "graphcast_raw_nrmse": 0.517298,
-        "spheredyn_raw_rank_among_12_raw": 1,
-        "spheredyn_spherettc_nrmse_rank_among_24": 1,
-        "spheredyn_spherettc_acc_rank_among_24": 1
-      }
-    ],
-    "table": "results/SPHEREDYN_SPHERETTC.md"
   },
   "open_risks": "docs/04_AUDIT_AND_RISKS.md (R1 daily-mean memory admission must be fixed and re-run before submission)"
 }

@@ -1,20 +1,21 @@
-# artifacts/ —— 冻结实验证据（只读）
+# artifacts/ — SphereTTC 冻结实验证据
 
-这里的文件是实验当时冻结的结果、配置、日志与审计，整理时**没有修改任何一个字节**。历史日志、profile 里的 `/mnt/bn/...` 绝对路径只是原服务器 provenance。
+当前结果仅包含 11 个冻结 backbone 的 Raw 与 SphereTTC。清理只筛除另一项目的记录并重建展示文件；保留的逐单元 RMSE/ACC 字符串、原始 publication CSV、GraphCast 更新 CSV 和标准化统计均未修改。`verify_migration.py` 固定关键文件 SHA-256，并独立重建结果与表格。
 
-| 目录 | 日期 | 内容 | 状态 |
-|---|---|---|---|
-| `graphcast_spherettc_20260804/` | 08-04 | GraphCast 上 SphereTTC 的参数更新：`schedule/`（56 候选 → **`l64_s08`**，2018–2019 回看，2020 prospective）和 `parameter_only/`（负结果）；更新后的 5,880 行结果与 49 张表 | SOTA A 的 GraphCast 一行 + 稳健性；**最新全表** |
-| `spheredyn_spherettc_open_goal_20260801/` | 08-01 → 08-03 | SphereDyn-v9 + SphereTTC-v22 主预测、协议 v2、原版 49 张表、两份权重 | **SOTA B**（注意 R2/R3） |
-| `ttc_publication_corrected_20260726/` | 07-26 | 11 个 backbone 的 SphereTTC 冻结参数与 5,390 行结果、120h 稿件表、climatology 元数据 | **SOTA A**（10 个 backbone 直接来自这里） |
+| 目录 | 内容 |
+|---|---|
+| `ttc_publication_corrected_20260726/` | 11-backbone publication 参数、5,390 行结果、稿件表与 climatology 元数据 |
+| `graphcast_spherettc_20260804/` | GraphCast `l64_s08` 更新、2017 选参、2018–2019 回看、2020 prospective 和 parameter-only 负结果 |
+| `shared/` | 1979–2016 的 54 变量标准化统计；汇总 nRMSE 时使用其中的 common-49 变量 |
+| `provenance/` | 只读历史完整性记录；其中旧路径不是本仓库运行依赖 |
 
-最常用的几个文件：
+最新入口：
 
-- 最新结果（机器可读）：`graphcast_spherettc_20260804/LATEST_RESULTS.csv`
-- 最新 49 张表：`graphcast_spherettc_20260804/LATEST_RESULTS_49_VARIABLES_ZH.md`
-- SOTA A：`ttc_publication_corrected_20260726/FROZEN_PARAMETERS.json`、`results/MAIN_RESULTS.csv`；GraphCast 更新见 `graphcast_spherettc_20260804/schedule/MAIN_EXPERIMENT_RECOMMENDATION.md`
-- SOTA B：`spheredyn_spherettc_open_goal_20260801/main_prediction_v2_seed44/MAIN_GOAL_GATE.json`、`EXPERIMENT_SUMMARY_ZH.md`
-- 2020 prospective：`graphcast_spherettc_20260804/schedule/PROSPECTIVE_2020_REPORT.md`
-- 原版 49 张表：`spheredyn_spherettc_open_goal_20260801/MAIN_RESULTS_49_VARIABLES_ZH.md`
+- `graphcast_spherettc_20260804/LATEST_RESULTS.csv`：5,390 行，11 backbones × 2 methods × 49 variables × 5 leads。
+- `graphcast_spherettc_20260804/LATEST_RESULTS_49_VARIABLES_ZH.md`：49 张表，每张 22 行。
+- `graphcast_spherettc_20260804/schedule/PROSPECTIVE_2020_REPORT.md`：独立年份 GraphCast 证据。
+- `ttc_publication_corrected_20260726/results/MAIN_RESULTS_49_VARIABLES_ZH.md`：原 publication 参数表。
 
-各子目录 README 里提到的 `scripts/verify_*_reproducibility.py` 已移到 `archive/full_archive_verifiers/`；`scripts/build_latest_results.py` 等出表脚本现在位于 `scripts/tables/`。本仓库的一键验证请使用根目录的 `verify_migration.py`。
+从仓库根目录运行 `PYTHONDONTWRITEBYTECODE=1 python verify_migration.py` 做只读检查；`python scripts/tables/build_latest_results.py --check` 与 `python tools/build_results_summary.py --check` 分别检查最新全表与摘要。当前轻量仓库不包含预测缓存、原始天气数据、逐 initialization 指标或 checkpoint；不能将表格重建等同于重新预测或重新 bootstrap。
+
+校验范围为受清单管理的分发包；用户本地 `paper/`、`.venv/` 和 `runs/` 不在分发包清单或轻量数据策略范围内。

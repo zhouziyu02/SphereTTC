@@ -1,0 +1,19 @@
+{
+  "model": "cirt",
+  "selection_year": 2017,
+  "best_params": {
+    "memory_size": 32,
+    "lmax": 32,
+    "mmax": 32,
+    "half_life": 16.0,
+    "ridge": 0.05,
+    "strength": 1.0,
+    "min_memory": 24,
+    "holdout_fraction": 0.25,
+    "min_holdout": 8,
+    "confidence_z": 0.5,
+    "robust_quantile_scale": 3.0,
+    "max_scale_delta": 0.5,
+    "taper_power": 1.0
+  }
+}

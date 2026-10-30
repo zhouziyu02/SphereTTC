@@ -1,0 +1,30 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "spherettc"
+version = "0.1.0"
+description = "Closed-form spherical-harmonic calibration of frozen weather forecasts"
+requires-python = ">=3.11"
+dependencies = [
+    "numpy==1.26.4",
+    "torch==2.7.1",
+    "torch-harmonics==0.8.0",
+    "xarray==2024.10.0",
+    "pandas==2.2.3",
+    "zarr==2.18.7",
+    "numcodecs==0.15.1",
+    "dask[array]==2024.8.1",
+    "gcsfs==2024.10.0",
+]
+
+[project.optional-dependencies]
+test = ["pytest==8.3.5"]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-ra"
